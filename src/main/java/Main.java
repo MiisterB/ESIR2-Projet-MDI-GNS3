@@ -7,8 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Project myProject = new Project("test3");
+            Project myProject = new Project("test4");
             System.out.println(myProject.getProjectId());
+            myProject.delete();
         } catch (Exception e) {
             System.out.println(e);
         }
