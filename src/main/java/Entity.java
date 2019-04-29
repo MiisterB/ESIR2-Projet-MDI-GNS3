@@ -3,28 +3,37 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-public abstract class Entity
-{
-    //Attributs
-    String m_name;
-    String m_project_id;
+public abstract class Entity{
 
-    public void Entity(String name)
-    {
+    protected String m_name;
+    protected String m_entity_id;
+
+    protected Entity(String name) {
         m_name = name;
     }
 
-    abstract void create();
+    protected JSONObject create(JSONObject requestJson){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<String>(requestJson.toString(), headers);
 
-    abstract void delete();
+        String jsonResult = Main.getRestTemplate().postForObject(makeUrl(""), entity, String.class);
+        return new JSONObject(jsonResult);
+    }
 
-    abstract String makeUrl(String path);
+    protected void delete(){
+        Main.getRestTemplate().delete(makeUrl("/" + m_entity_id));
+    }
+
+    protected String makeUrl(String path){
+        return Main.makeUrl(path);
+    }
 
     public String getName() {
         return m_name;
     }
 
-    public String getProjectId() {
-        return m_project_id;
+    public String getEntityId() {
+        return m_entity_id;
     }
 }

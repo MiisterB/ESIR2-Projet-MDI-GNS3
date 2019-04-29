@@ -1,35 +1,32 @@
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 public class Node extends Entity
 {
-    //attributs
+    String m_project_id;
     String m_node_type;
-    String m_compute_id;
 
-    public void Node(String name, String project_id, String node_type, String compute_id)
-    {
-        this.m_name = name;
-        this.m_project_id = project_id;
-        this.m_node_type = node_type;
-        this.m_compute_id = compute_id;
+    protected String makeUrl(String path){
+        return super.makeUrl("/v2/projects/") + m_project_id + "/nodes" + path;
+    }
+
+    public Node(String project_id, String name, String node_type){
+        super(name);
+        m_project_id = project_id;
+        m_node_type = node_type;
         create();
     }
 
-    void create()
-    {
-
+    public void create() {
+        JSONObject req = new JSONObject()
+                .put("name", getName())
+                .put("node_type", m_node_type)
+                .put("compute_id", "local");
+        JSONObject res = super.create(req);
+        m_entity_id = res.getString("node_id");
     }
 
-    void delete()
+    public void delete()
     {
-
-    }
-
-    String makeUrl(String path)
-    {
-        return null;
+        super.delete();
     }
 }
