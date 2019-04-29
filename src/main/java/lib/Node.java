@@ -1,17 +1,18 @@
+package lib;
+
 import org.json.JSONObject;
 
-public class Node extends Entity
+class Node extends RestEntity
 {
     private String m_node_type;
 
-    public Node(String base_url, String name, String node_type){
-        super(name);
+    Node(String base_url, String name, String node_type){
+        super(base_url + "/nodes", name);
         m_node_type = node_type;
-        m_base_url  = base_url + "/nodes";
         create();
     }
 
-    protected void create() {
+    private void create() {
         JSONObject req = new JSONObject()
                 .put("name", getName())
                 .put("node_type", m_node_type)
