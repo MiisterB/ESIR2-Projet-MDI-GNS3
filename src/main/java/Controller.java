@@ -1,8 +1,8 @@
 public class Controller
 {
     //Attributs
-    string adresseIP;
-    public void Controller(string ip)
+    String adresseIP;
+    public void Controller(String ip)
     {
         adresseIP = ip;
     }

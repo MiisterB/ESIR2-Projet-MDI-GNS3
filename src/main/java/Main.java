@@ -9,7 +9,7 @@ public class Main {
         try {
             Project myProject = new Project("test4");
             System.out.println(myProject.getProjectId());
-            myProject.delete();
+            myProject.deleteRequest();
         } catch (Exception e) {
             System.out.println(e);
         }
