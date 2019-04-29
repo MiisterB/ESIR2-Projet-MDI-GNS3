@@ -1,21 +1,26 @@
+
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-public class Project {
-    String name;
-    String projectId;
+public class Project extends Entity{
 
-    private String makeUrl(String path){
+    public String makeUrl(String path){
         return Main.makeUrl("/v2/projects") + path;
     }
 
     public Project(String name) throws Exception {
-        String jsonResult;
-        this.name = name;
+        this.m_name = name;
+        create();
+    }
 
-        String requestJson = "{\"name\":\"" + name + "\"}";
+    public void create()
+    {
+        String jsonResult;
+
+
+        String requestJson = "{\"name\":\"" + this.m_name + "\"}";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -23,18 +28,19 @@ public class Project {
         jsonResult = Main.getRestTemplate().postForObject(makeUrl(""), entity, String.class);
 
         JSONObject obj = new JSONObject(jsonResult);
-        projectId= obj.getString("project_id");
+        m_project_id= obj.getString("project_id");
+    }
+
+    public void delete()
+    {
+        Main.getRestTemplate().delete(makeUrl("/" + m_project_id));
     }
 
     public String getName() {
-        return name;
+        return m_name;
     }
 
     public String getProjectId() {
-        return projectId;
-    }
-
-    public void delete(){
-        Main.getRestTemplate().delete(makeUrl("/" + projectId));
+        return m_project_id;
     }
 }
