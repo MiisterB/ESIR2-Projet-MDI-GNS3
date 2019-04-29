@@ -2,15 +2,15 @@ package lib;
 
 import org.json.JSONObject;
 
-public class Project extends RestEntity {
+public class Project extends RestEntity{
 
     Project(String base_url, String name) {
-        super(base_url + "/v2/projects", name);
+        super(base_url, name);
         create();
     }
 
     Project(String base_url, String name, String entity_id){
-        super(base_url + "/v2/projects", name, entity_id);
+        super(base_url, name, entity_id);
     }
 
     private void create() {

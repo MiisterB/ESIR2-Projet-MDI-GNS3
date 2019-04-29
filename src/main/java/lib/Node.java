@@ -12,6 +12,12 @@ class Node extends RestEntity
         create();
     }
 
+    Node(String base_url, String name, String node_type, String entity_id){
+        super(base_url + "/nodes", name, entity_id);
+        m_node_type = node_type;
+        create();
+    }
+
     private void create() {
         JSONObject req = new JSONObject()
                 .put("name", getName())
