@@ -8,8 +8,7 @@ public class Controller {
 
     public Controller(String ip)
     {
-        String base_url = "http://" + ip + ":3080/v2/projects";
-        projects = new EntityManager<>(base_url, new Project(base_url));
+        projects = new EntityManager<>("http://" + ip + ":3080/v2/projects", "Project");
     }
 
     public List<Project> getProjects(){

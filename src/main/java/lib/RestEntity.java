@@ -5,7 +5,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-import java.util.List;
 
 public abstract class RestEntity {
 
@@ -13,8 +12,10 @@ public abstract class RestEntity {
     String m_entity_id;
     String m_base_url;
 
-    abstract RestEntity createInstance(List<String> params);
-    abstract RestEntity getInstance(JSONObject e);
+    RestEntity(String base_url){
+        restTemplate = new RestTemplate();
+        m_base_url = base_url;
+    }
 
     JSONObject create(JSONObject req){
         HttpHeaders headers = new HttpHeaders();

@@ -11,13 +11,13 @@ class EntityManager<T extends RestEntity> {
     private RestTemplate restTemplate;
     private List<T> entities;
     private String m_base_url;
-    private T m_entity;
+    private String m_entity_type;
 
-    EntityManager(String base_url, T entity) {
+    EntityManager(String base_url, String type) {
         restTemplate = new RestTemplate();
         entities = new ArrayList<>();
         m_base_url = base_url;
-        m_entity = entity;
+        m_entity_type = type;
     }
 
     List<T> getEntities(){
@@ -26,7 +26,21 @@ class EntityManager<T extends RestEntity> {
         JSONArray res = new JSONArray(jsonResult);
         for (int i = 0; i < res.length(); i++) {
             JSONObject e = res.getJSONObject(i);
-            entities.add((T) m_entity.getInstance(e));
+            T result;
+            switch (m_entity_type) {
+                case "Project":
+                    result = (T) new Project(m_base_url, e.getString("name"), e.getString("project_id"));
+                    break;
+                case "Node":
+                    result = (T) new Node(m_base_url, e.getString("name"), e.getString("node_type"), e.getString("node_id"));
+                    break;
+                case "Link" :
+                    result = (T) new Link(m_base_url, e.getString("link_id"));
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + m_entity_type);
+            }
+            entities.add(result);
         }
         return entities;
     }
@@ -39,7 +53,20 @@ class EntityManager<T extends RestEntity> {
             }
         }
 
-        T result = (T) m_entity.createInstance(params);
+        T result;
+        switch (m_entity_type) {
+            case "Project":
+                result = (T) new Project(m_base_url, params.get(0));
+                break;
+            case "Node":
+                result = (T) new Node(m_base_url, params.get(0), params.get(1));
+                break;
+            case "Link" :
+                result = (T) new Link(m_base_url, params.get(0), params.get(1));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + m_entity_type);
+        }
         entities.add(result);
         return result;
     }

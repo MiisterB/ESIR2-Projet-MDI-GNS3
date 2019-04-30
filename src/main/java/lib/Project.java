@@ -1,8 +1,6 @@
 package lib;
 
 import org.json.JSONObject;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,22 +11,12 @@ public class Project extends RestEntity{
     private EntityManager<Link> links;
 
     private void initializeManagers(String base_url){
-        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
-        String base_url_link = base_url + "/" + getTrueId() + "/links";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
-        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+        nodes = new EntityManager<>(base_url + "/" + getTrueId() + "/nodes", "Node");
+        links = new EntityManager<>(base_url + "/" + getTrueId() + "/links", "Link");
     }
 
-    Project(String base_url){
-        restTemplate = new RestTemplate();
-        m_base_url = base_url;
-
-        initializeManagers(base_url);
-    }
-
-    private Project(String base_url, String name) {
-        restTemplate = new RestTemplate();
-        m_base_url = base_url;
+    Project(String base_url, String name) {
+        super(base_url);
         m_name = name;
 
         JSONObject req = new JSONObject().put("name",getName());
@@ -38,12 +26,10 @@ public class Project extends RestEntity{
         initializeManagers(base_url);
     }
 
-    private Project(String base_url, String name, String entity_id){
-        restTemplate = new RestTemplate();
-        m_base_url = base_url;
+    Project(String base_url, String name, String entity_id){
+        super(base_url);
         m_name = name;
         m_entity_id = entity_id;
-
         initializeManagers(base_url);
     }
 
@@ -55,15 +41,6 @@ public class Project extends RestEntity{
     }
     public String getTrueId() {
         return m_entity_id;
-    }
-
-    @Override
-    RestEntity createInstance(List<String> params) {
-        return new Project(m_base_url, params.get(0));
-    }
-    @Override
-    RestEntity getInstance(JSONObject e) {
-        return new Project(m_base_url, e.getString("name"), e.getString("project_id"));
     }
 
     public List<Node> getNodes(){
