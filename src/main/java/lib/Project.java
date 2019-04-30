@@ -12,14 +12,18 @@ public class Project extends RestEntity{
     private EntityManager<Node> nodes;
     private EntityManager<Link> links;
 
-    Project(String base_url){
-        restTemplate = new RestTemplate();
-        m_base_url = base_url;
-
+    private void initializeManagers(String base_url){
         String base_url_node = base_url + "/" + getTrueId() + "/nodes";
         String base_url_link = base_url + "/" + getTrueId() + "/links";
         nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
         links = new EntityManager<>(base_url_link, new Link(base_url_link));
+    }
+
+    Project(String base_url){
+        restTemplate = new RestTemplate();
+        m_base_url = base_url;
+
+        initializeManagers(base_url);
     }
 
     private Project(String base_url, String name) {
@@ -31,10 +35,7 @@ public class Project extends RestEntity{
         JSONObject res = super.create(req);
         m_entity_id = res.getString("project_id");
 
-        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
-        String base_url_link = base_url + "/" + getTrueId() + "/links";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
-        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+        initializeManagers(base_url);
     }
 
     private Project(String base_url, String name, String entity_id){
@@ -43,10 +44,7 @@ public class Project extends RestEntity{
         m_name = name;
         m_entity_id = entity_id;
 
-        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
-        String base_url_link = base_url + "/" + getTrueId() + "/links";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
-        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+        initializeManagers(base_url);
     }
 
     public String getName() {

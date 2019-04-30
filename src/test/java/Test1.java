@@ -1,18 +1,23 @@
 import lib.Controller;
+import lib.Project;
+import org.junit.Test;
+
+import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 public class Test1 {
 
-    public static void main(String[] args) {
+    @Test
+    public void testProjectsManagement(){
         Controller controller = new Controller("148.60.11.161");
 
-        controller.getProjects().forEach(p -> System.out.println(p.getName() + " : " + p.getId()));
+        List<Project> projects = controller.getProjects();
 
-        controller.addProject("test").delete();
+        controller.addProject("testAuto").delete();
+        controller.addProject("testAuto");
+        controller.deleteProject("testAuto");
 
-        controller.addProject("test");
-        System.out.println(controller.getProject("test").getId());
-        controller.deleteProject("test");
+        assertEquals(projects, controller.getProjects());
 
-        controller.getProjects().forEach(p -> System.out.println(p.getName() + " : " + p.getId()));
     }
 }
