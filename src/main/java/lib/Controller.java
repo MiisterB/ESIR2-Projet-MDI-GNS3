@@ -16,7 +16,7 @@ public class Controller {
     }
 
     public Project addProject(String name){
-        List<String> params = new ArrayList();
+        List<Object> params = new ArrayList();
         params.add(name);
         return projects.addEntity(params);
     }

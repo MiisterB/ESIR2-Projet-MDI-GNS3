@@ -15,6 +15,13 @@ public class Project extends RestEntity{
         links = new EntityManager<>(base_url + "/" + getTrueId() + "/links", "Link");
     }
 
+    Project(String base_url, String name, String entity_id){
+        super(base_url);
+        m_name = name;
+        m_entity_id = entity_id;
+        initializeManagers(base_url);
+    }
+
     Project(String base_url, String name) {
         super(base_url);
         m_name = name;
@@ -23,13 +30,6 @@ public class Project extends RestEntity{
         JSONObject res = super.create(req);
         m_entity_id = res.getString("project_id");
 
-        initializeManagers(base_url);
-    }
-
-    Project(String base_url, String name, String entity_id){
-        super(base_url);
-        m_name = name;
-        m_entity_id = entity_id;
         initializeManagers(base_url);
     }
 
@@ -48,11 +48,20 @@ public class Project extends RestEntity{
     }
 
     public Node addNode(String name, String type){
-        List<String> params = new ArrayList();
+        List<Object> params = new ArrayList();
         params.add(name);
         params.add(type);
         return nodes.addEntity(params);
-}
+    }
+
+    public Node addNode(String name, String type, int x, int y){
+        List<Object> params = new ArrayList();
+        params.add(name);
+        params.add(type);
+        params.add(x);
+        params.add(y);
+        return nodes.addEntity(params);
+    }
 
     public Node getNode(String name){
         return nodes.getEntity(name);
@@ -67,9 +76,18 @@ public class Project extends RestEntity{
     }
 
     public Link addLink(Node n1, Node n2){
-        List<String> params = new ArrayList();
-        params.add(n1.getTrueId());
-        params.add(n2.getTrueId());
+        List<Object> params = new ArrayList();
+        params.add(n1);
+        params.add(n2);
+        return links.addEntity(params);
+    }
+
+    public Link addLink(Node n1, Node n2, int p1, int p2){
+        List<Object> params = new ArrayList();
+        params.add(n1);
+        params.add(n2);
+        params.add(p1);
+        params.add(p2);
         return links.addEntity(params);
     }
 

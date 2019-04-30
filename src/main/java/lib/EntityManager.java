@@ -45,7 +45,7 @@ class EntityManager<T extends RestEntity> {
         return entities;
     }
 
-    T addEntity(List<String> params){
+    T addEntity(List<Object> params){
         for (T e : getEntities()){
             if (e.getId().equals(params.get(0))){
                 System.err.println("L'entité " + params.get(0) + " existe déjà !");
@@ -56,13 +56,20 @@ class EntityManager<T extends RestEntity> {
         T result;
         switch (m_entity_type) {
             case "Project":
-                result = (T) new Project(m_base_url, params.get(0));
+                result = (T) new Project(m_base_url, (String) params.get(0));
                 break;
             case "Node":
-                result = (T) new Node(m_base_url, params.get(0), params.get(1));
+                if (params.size() == 2)
+                    result = (T) new Node(m_base_url, (String) params.get(0), (String) params.get(1));
+                else
+                    result = (T) new Node(m_base_url, (String) params.get(0), (String) params.get(1), (int) params.get(2), (int) params.get(3));
                 break;
             case "Link" :
-                result = (T) new Link(m_base_url, params.get(0), params.get(1));
+                if (params.size() == 2)
+                    result = (T) new Link(m_base_url, (Node) params.get(0), (Node) params.get(1));
+                else
+                    result = (T) new Link(m_base_url, (Node) params.get(0), (Node) params.get(1), (int) params.get(2), (int) params.get(3));
+
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + m_entity_type);
