@@ -1,14 +1,63 @@
 package lib;
 
 import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends RestEntity{
 
+    private String m_name;
     private EntityManager<Node> nodes;
     private EntityManager<Link> links;
+
+    Project(String base_url){
+        restTemplate = new RestTemplate();
+        m_base_url = base_url;
+
+        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
+        String base_url_link = base_url + "/" + getTrueId() + "/links";
+        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
+        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+    }
+
+    private Project(String base_url, String name) {
+        restTemplate = new RestTemplate();
+        m_base_url = base_url;
+        m_name = name;
+
+        JSONObject req = new JSONObject().put("name",getName());
+        JSONObject res = super.create(req);
+        m_entity_id = res.getString("project_id");
+
+        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
+        String base_url_link = base_url + "/" + getTrueId() + "/links";
+        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
+        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+    }
+
+    private Project(String base_url, String name, String entity_id){
+        restTemplate = new RestTemplate();
+        m_base_url = base_url;
+        m_name = name;
+        m_entity_id = entity_id;
+
+        String base_url_node = base_url + "/" + getTrueId() + "/nodes";
+        String base_url_link = base_url + "/" + getTrueId() + "/links";
+        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
+        links = new EntityManager<>(base_url_link, new Link(base_url_link));
+    }
+
+    public String getName() {
+        return m_name;
+    }
+    public String getId() {
+        return m_name;
+    }
+    public String getTrueId() {
+        return m_entity_id;
+    }
 
     @Override
     RestEntity createInstance(List<String> params) {
@@ -17,27 +66,6 @@ public class Project extends RestEntity{
     @Override
     RestEntity getInstance(JSONObject e) {
         return new Project(m_base_url, e.getString("name"), e.getString("project_id"));
-    }
-
-    Project(String base_url){
-        super(base_url);
-        String base_url_node = base_url + "/" + getId() + "/nodes";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
-    }
-
-    private Project(String base_url, String name) {
-        super(base_url, name);
-        String base_url_node = base_url + "/" + getId() + "/nodes";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
-        JSONObject req = new JSONObject().put("name",getName());
-        JSONObject res = super.create(req);
-        m_entity_id = res.getString("project_id");
-    }
-
-    private Project(String base_url, String name, String entity_id){
-        super(base_url, name, entity_id);
-        String base_url_node = base_url + "/" + getId() + "/nodes";
-        nodes = new EntityManager<>(base_url_node, new Node(base_url_node));
     }
 
     public List<Node> getNodes(){
@@ -63,18 +91,18 @@ public class Project extends RestEntity{
         return links.getEntities();
     }
 
-    public Link addLink(String name, String type){
+    public Link addLink(Node n1, Node n2){
         List<String> params = new ArrayList();
-        params.add(name);
-        params.add(type);
+        params.add(n1.getTrueId());
+        params.add(n2.getTrueId());
         return links.addEntity(params);
     }
 
-    public Link getLink(String name){
-        return links.getEntity(name);
+    public Link getLink(String id){
+        return links.getEntity(id);
     }
 
-    public void deleteLink(String name){
-        links.deleteEntity(name);
+    public void deleteLink(String id){
+        links.deleteEntity(id);
     }
 }

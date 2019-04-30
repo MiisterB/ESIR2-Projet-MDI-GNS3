@@ -33,7 +33,7 @@ class EntityManager<T extends RestEntity> {
 
     T addEntity(List<String> params){
         for (T e : getEntities()){
-            if (e.getName().equals(params.get(0))){
+            if (e.getId().equals(params.get(0))){
                 System.err.println("L'entité " + params.get(0) + " existe déjà !");
                 return null;
             }
@@ -44,24 +44,24 @@ class EntityManager<T extends RestEntity> {
         return result;
     }
 
-    T getEntity(String name){
+    T getEntity(String id){
         for (T e : getEntities()){
-            if (e.getName().equals(name)){
+            if (e.getId().equals(id)){
                 return e;
             }
         }
-        System.err.println("L'entité " + name + " n'existe pas !");
+        System.err.println("L'entité " + id + " n'existe pas !");
         return null;
     }
 
-    void deleteEntity(String name){
+    void deleteEntity(String id){
         for (T e : getEntities()){
-            if (e.getName().equals(name)){
+            if (e.getId().equals(id)){
                 entities.remove(e);
                 e.delete();
                 return;
             }
         }
-        System.err.println("L'entité " + name + " n'existe pas !");
+        System.err.println("L'entité " + id + " n'existe pas !");
     }
 }

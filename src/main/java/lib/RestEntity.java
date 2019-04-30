@@ -9,30 +9,12 @@ import java.util.List;
 
 public abstract class RestEntity {
 
-    private RestTemplate restTemplate;
-    private String m_name;
+    RestTemplate restTemplate;
     String m_entity_id;
     String m_base_url;
 
     abstract RestEntity createInstance(List<String> params);
     abstract RestEntity getInstance(JSONObject e);
-
-    RestEntity(String base_url){
-        m_base_url = base_url;
-    }
-
-    RestEntity(String base_url, String name) {
-        restTemplate = new RestTemplate();
-        m_name     = name;
-        m_base_url = base_url;
-    }
-
-    RestEntity(String base_url, String name, String entity_id) {
-        restTemplate = new RestTemplate();
-        m_name      = name;
-        m_entity_id = entity_id;
-        m_base_url  = base_url;
-    }
 
     JSONObject create(JSONObject req){
         HttpHeaders headers = new HttpHeaders();
@@ -45,10 +27,6 @@ public abstract class RestEntity {
 
     public void delete(){
         restTemplate.delete(m_base_url + "/" + m_entity_id);
-    }
-
-    public String getName() {
-        return m_name;
     }
 
     public String getId() {
