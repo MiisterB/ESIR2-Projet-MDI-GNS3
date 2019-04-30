@@ -2,41 +2,44 @@ package lib;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ControlEntity<T extends RestEntity> {
+class EntityManager<T extends RestEntity> {
+    private RestTemplate restTemplate;
     private List<T> entities;
-    protected String m_base_url;
+    private String m_base_url;
+    private T m_entity;
 
-    public ControlEntity(String base_url) {
-        m_base_url = base_url;
+    EntityManager(String base_url, T entity) {
+        restTemplate = new RestTemplate();
         entities = new ArrayList<>();
+        m_base_url = base_url;
+        m_entity = entity;
     }
-
-    abstract T getInstance(JSONObject e);
-    abstract T createInstance(String name, String type);
 
     List<T> getEntities(){
         entities.clear();
-        String jsonResult = Controller.restTemplate.getForObject(m_base_url, String.class);
+        String jsonResult = restTemplate.getForObject(m_base_url, String.class);
         JSONArray res = new JSONArray(jsonResult);
         for (int i = 0; i < res.length(); i++) {
             JSONObject e = res.getJSONObject(i);
-            entities.add(getInstance(e));
+            entities.add((T) m_entity.getInstance(e));
         }
         return entities;
     }
 
-    T addEntity(String name){
+    T addEntity(List<String> params){
         for (T e : getEntities()){
-            if (e.getName().equals(name)){
-                System.err.println("L'entité " + name + " existe déjà !");
+            if (e.getName().equals(params.get(0))){
+                System.err.println("L'entité " + params.get(0) + " existe déjà !");
                 return null;
             }
         }
-        T result = createInstance(name, "");
+
+        T result = (T) m_entity.createInstance(params);
         entities.add(result);
         return result;
     }
