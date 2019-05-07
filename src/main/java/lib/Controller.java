@@ -15,17 +15,19 @@ public class Controller {
         return projects.getEntities();
     }
 
-    public Project addProject(String name){
+    public Controller addProject(String name){
         List<Object> params = new ArrayList();
         params.add(name);
-        return projects.addEntity(params);
+        projects.addEntity(params);
+        return this;
     }
 
     public Project getProject(String name){
         return projects.getEntity(name);
     }
 
-    public void deleteProject(String name){
+    public Controller deleteProject(String name){
         projects.deleteEntity(name);
+        return this;
     }
 }

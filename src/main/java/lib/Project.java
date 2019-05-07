@@ -47,55 +47,61 @@ public class Project extends RestEntity{
         return nodes.getEntities();
     }
 
-    public Node addNode(String name, String type){
+    public Project addNode(String name, String type){
         List<Object> params = new ArrayList();
         params.add(name);
         params.add(type);
-        return nodes.addEntity(params);
+        nodes.addEntity(params);
+        return this;
     }
 
-    public Node addNode(String name, String type, int x, int y){
+    public Project addNode(String name, String type, int x, int y){
         List<Object> params = new ArrayList();
         params.add(name);
         params.add(type);
         params.add(x);
         params.add(y);
-        return nodes.addEntity(params);
+        nodes.addEntity(params);
+        return this;
     }
 
     public Node getNode(String name){
         return nodes.getEntity(name);
     }
 
-    public void deleteNode(String name){
+    public Project deleteNode(String name){
         nodes.deleteEntity(name);
+        return this;
     }
 
     public List<Link> getLinks(){
         return links.getEntities();
     }
 
-    public Link addLink(Node n1, Node n2){
+    public Project addLink(Node n1, Node n2){
         List<Object> params = new ArrayList();
         params.add(n1);
         params.add(n2);
-        return links.addEntity(params);
+        links.addEntity(params);
+        return this;
     }
 
-    public Link addLink(Node n1, Node n2, int p1, int p2){
+    public Project addLink(Node n1, Node n2, int p1, int p2){
         List<Object> params = new ArrayList();
         params.add(n1);
         params.add(n2);
         params.add(p1);
         params.add(p2);
-        return links.addEntity(params);
+        links.addEntity(params);
+        return this;
     }
 
     public Link getLink(String id){
         return links.getEntity(id);
     }
 
-    public void deleteLink(String id){
+    public Project deleteLink(String id){
         links.deleteEntity(id);
+        return this;
     }
 }
