@@ -66,4 +66,19 @@ public class Link extends RestEntity{
     public int getSecondNodePort() {
         return m_port2;
     }
+
+    //Return the list of filters available for this link
+    public int available_filters(){
+        return 0;
+    }
+
+    //Start capture on a link instance. By default we consider it as an Ethernet link
+    public int start_capture(){
+        return 0;
+    }
+
+    //Stop capture on a link instance
+    public int stop_capture(){
+        return 0;
+    }
 }
