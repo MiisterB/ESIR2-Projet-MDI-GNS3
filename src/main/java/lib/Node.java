@@ -60,11 +60,11 @@ public class Node extends RestEntity{
     }
 
     //Fonction qui duplique l'instance d'un noeud
-    public JSONObject duplicateNode()
+    public JSONObject duplicateNode(int x, int y)
     {
         JSONObject req = new JSONObject()
-                .put("x", m_x)
-                .put("y", m_y)
+                .put("x", x)
+                .put("y", y)
                 .put("z",0);
 
         HttpHeaders headers = new HttpHeaders();
@@ -73,5 +73,25 @@ public class Node extends RestEntity{
 
         String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
         return new JSONObject(jsonResult);
+    }
+
+    //Fonction qui duplique l'instance d'un noeud
+    public JSONObject reloadNode()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/reload", entity, String.class);
+        return new JSONObject(jsonResult);
+    }
+
+    //Fonction qui récupère tous les liens reliés à un noeud
+    public JSONObject getLinks()
+    {
+
+        return new JSONObject();
     }
 }
