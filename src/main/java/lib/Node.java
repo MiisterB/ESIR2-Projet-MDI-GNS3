@@ -1,5 +1,8 @@
 package lib;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class Node extends RestEntity{
 
@@ -54,5 +57,21 @@ public class Node extends RestEntity{
 
     public String getTrueId() {
         return m_entity_id;
+    }
+
+    //Fonction qui duplique l'instance d'un noeud
+    public JSONObject duplicateNode()
+    {
+        JSONObject req = new JSONObject()
+                .put("x", m_x)
+                .put("y", m_y)
+                .put("z",0);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+        return new JSONObject(jsonResult);
     }
 }
