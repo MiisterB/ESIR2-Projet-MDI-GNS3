@@ -3,6 +3,9 @@ package lib;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class Project extends RestEntity{
 
@@ -103,5 +106,57 @@ public class Project extends RestEntity{
     public Project deleteLink(String id){
         links.deleteEntity(id);
         return this;
+    }
+
+    //Fonction qui permet de fermer un projet
+    public JSONObject closeProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/close", entity, String.class);
+        return new JSONObject(jsonResult);
+    }
+
+
+    //Fonction qui permet de dupliquer un projet
+    public JSONObject duplicateProject(String name)
+    {
+        JSONObject req = new JSONObject()
+                .put("name", name);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+        return new JSONObject(jsonResult);
+    }
+
+    //Fonction qui permet de exporter un projet
+    public JSONObject exportProject()
+    {
+        //not yet implemented
+    }
+
+    //Fonction qui permet de importer un projet
+    public JSONObject importProject()
+    {
+        //not yet implemented
+    }
+
+    //Fonction qui permet de voir les notifications
+    public JSONObject notifyProject()
+    {
+        //not yet implemented
+    }
+
+    //Fonction qui permet d'ouvir un projet
+    public JSONObject openProject(String name)
+    {
+        //not yet implemented
     }
 }
