@@ -152,7 +152,17 @@ public class Project extends RestEntity{
     //Fonction qui permet de importer un projet
     public JSONObject importProject()
     {
-        //not yet implemented
+        {
+            JSONObject req = new JSONObject();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+            String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/import", entity, String.class);
+            return new JSONObject(jsonResult);
+        }
+
     }
 
     //Fonction qui permet de voir les notifications
