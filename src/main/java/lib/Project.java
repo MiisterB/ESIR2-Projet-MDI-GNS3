@@ -165,7 +165,14 @@ public class Project extends RestEntity{
     //Fonction qui permet de voir les notifications
     public JSONObject notifyProject()
     {
-        //not yet implemented
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        String jsonResult = restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/notifications", String.class);
+        return new JSONObject(jsonResult);
     }
 
 
