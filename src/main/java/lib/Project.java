@@ -11,8 +11,8 @@ public class Project extends RestEntity{
     private EntityManager<Link> links;
 
     private void initializeManagers(String base_url){
-        nodes = new EntityManager<>(base_url + "/" + getTrueId() + "/nodes", "Node");
-        links = new EntityManager<>(base_url + "/" + getTrueId() + "/links", "Link");
+        nodes = new EntityManager<>(base_url + "/" + getTrueId() + "/nodes", EntityTypes.Node);
+        links = new EntityManager<>(base_url + "/" + getTrueId() + "/links", EntityTypes.Link);
     }
 
     Project(String base_url, String name, String entity_id){
