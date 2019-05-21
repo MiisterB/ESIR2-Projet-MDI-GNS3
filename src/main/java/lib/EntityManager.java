@@ -9,19 +9,17 @@ import java.util.List;
 
 class EntityManager<T extends RestEntity> {
     private RestTemplate restTemplate;
-    private List<T> entities;
     private String m_base_url;
     private String m_entity_type;
 
     EntityManager(String base_url, String type) {
         restTemplate = new RestTemplate();
-        entities = new ArrayList<>();
         m_base_url = base_url;
         m_entity_type = type;
     }
 
     List<T> getEntities(){
-        entities.clear();
+        List<T> entities = new ArrayList<>();
         String jsonResult = restTemplate.getForObject(m_base_url, String.class);
         JSONArray res = new JSONArray(jsonResult);
         for (int i = 0; i < res.length(); i++) {
@@ -45,37 +43,32 @@ class EntityManager<T extends RestEntity> {
         return entities;
     }
 
-    T addEntity(List<Object> params){
+    void addEntity(List<Object> params){
         for (T e : getEntities()){
             if (e.getId().equals(params.get(0))){
                 System.err.println("L'entité " + params.get(0) + " existe déjà !");
-                return null;
+                return;
             }
         }
-
-        T result;
         switch (m_entity_type) {
             case "Project":
-                result = (T) new Project(m_base_url, (String) params.get(0));
+                new Project(m_base_url, (String) params.get(0));
                 break;
             case "Node":
                 if (params.size() == 2)
-                    result = (T) new Node(m_base_url, (String) params.get(0), (String) params.get(1));
+                    new Node(m_base_url, (String) params.get(0), (String) params.get(1));
                 else
-                    result = (T) new Node(m_base_url, (String) params.get(0), (String) params.get(1), (int) params.get(2), (int) params.get(3));
+                    new Node(m_base_url, (String) params.get(0), (String) params.get(1), (int) params.get(2), (int) params.get(3));
                 break;
             case "Link" :
                 if (params.size() == 2)
-                    result = (T) new Link(m_base_url, (Node) params.get(0), (Node) params.get(1));
+                    new Link(m_base_url, (Node) params.get(0), (Node) params.get(1));
                 else
-                    result = (T) new Link(m_base_url, (Node) params.get(0), (Node) params.get(1), (int) params.get(2), (int) params.get(3));
-
+                    new Link(m_base_url, (Node) params.get(0), (Node) params.get(1), (int) params.get(2), (int) params.get(3));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + m_entity_type);
         }
-        entities.add(result);
-        return result;
     }
 
     T getEntity(String id){
@@ -91,7 +84,6 @@ class EntityManager<T extends RestEntity> {
     void deleteEntity(String id){
         for (T e : getEntities()){
             if (e.getId().equals(id)){
-                entities.remove(e);
                 e.delete();
                 return;
             }
