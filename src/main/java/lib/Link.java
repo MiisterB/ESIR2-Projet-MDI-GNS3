@@ -2,6 +2,9 @@ package lib;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class Link extends RestEntity{
     private Node m_n1;
@@ -51,6 +54,11 @@ public class Link extends RestEntity{
         m_entity_id = res.getString("link_id");
     }
 
+    /*
+    Nouvelle partie implémentée
+     */
+
+
     public Node getFirstNode() {
         return m_n1;
     }
@@ -67,18 +75,58 @@ public class Link extends RestEntity{
         return m_port2;
     }
 
-    //Return the list of filters available for this link
-    public int available_filters(){
-        return 0;
+    public String getLinkID(){return m_entity_id;}
+
+
+    // Return thr list of link of the current projet
+    // ex : GET /v2/projects/7ab38231-b22e-4fd0-aee1-cb41c268c55f/links HTTP/1.1
+    public JSONObject Link()
+    {
+        String jsonResult = restTemplate.getForObject(m_base_url , String.class);
+        return new JSONObject(jsonResult);
+    }
+
+    // Return information of a link
+    // ex : GET /v2/projects/7ab38231-b22e-4fd0-aee1-cb41c268c55f/links HTTP/1.1
+    public JSONObject LinkID(Link l)
+    {
+        String jsonResult = restTemplate.getForObject(m_base_url + "/" + l.getLinkID() , String.class);
+        return new JSONObject(jsonResult);
+    }
+
+    //Return the list of filters available for this link in format JSON
+    // ex : GET /v2/projects/101dc781-9625-4f4d-8dfc-68b50b9f5936/links/f7746aee-b800-4e61-937f-ef07a81384c4/available_filters HTTP/1.1
+    public JSONObject available_filters()
+    {
+        String jsonResult = restTemplate.getForObject(m_base_url + "/" + m_entity_id + "/available_filters",String.class);
+        return new JSONObject(jsonResult);
     }
 
     //Start capture on a link instance. By default we consider it as an Ethernet link
-    public int start_capture(){
-        return 0;
+    // ex : POST /v2/projects/405691bc-6538-4f45-b65f-e3309c3543ea/links/4fc4bbd0-38a2-4360-82ad-658636472f8a/start_capture HTTP/1.1
+    //{}
+    public JSONObject start_capture(){
+        String req = "";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req,  headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + m_entity_id + "/start_capture",entity, String.class);
+        return new JSONObject(jsonResult);
     }
 
     //Stop capture on a link instance
-    public int stop_capture(){
-        return 0;
+    // ex : POST /v2/projects/405691bc-6538-4f45-b65f-e3309c3543ea/links/4fc4bbd0-38a2-4360-82ad-658636472f8a/start_capture HTTP/1.1
+    public JSONObject stop_capture(){
+        String req = "";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req,  headers);
+
+        String jsonResult = restTemplate.postForObject(m_base_url + "/" + m_entity_id + "/stop_capture",entity, String.class);
+        return new JSONObject(jsonResult);
     }
+
 }
