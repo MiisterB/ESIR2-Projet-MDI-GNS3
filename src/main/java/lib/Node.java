@@ -60,7 +60,7 @@ public class Node extends RestEntity{
     }
 
     //Fonction qui duplique l'instance d'un noeud
-    public JSONObject duplicateNode(int x, int y)
+    public Node duplicateNode(int x, int y)
     {
         JSONObject req = new JSONObject()
                 .put("x", x)
@@ -71,12 +71,12 @@ public class Node extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+        return this;
     }
 
-    //Fonction qui duplique l'instance d'un noeud
-    public JSONObject reloadNode()
+    //Fonction qui recharge l'instance d'un noeud
+    public Node reloadNode()
     {
         JSONObject req = new JSONObject();
 
@@ -84,14 +84,20 @@ public class Node extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/reload", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/reload", entity, String.class);
+        return this;
     }
 
     //Fonction qui récupère tous les liens reliés à un noeud
-    public JSONObject getLinks()
+    public Node getLinks()
     {
+        JSONObject req = new JSONObject();
 
-        return new JSONObject();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/links", entity, String.class);
+        return this;
     }
 }
