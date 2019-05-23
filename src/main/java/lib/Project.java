@@ -109,7 +109,7 @@ public class Project extends RestEntity{
     }
 
     //Fonction qui permet de fermer un projet
-    public JSONObject closeProject()
+    public Project closeProject()
     {
         JSONObject req = new JSONObject();
 
@@ -117,13 +117,14 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/close", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/close", entity, String.class);
+
+        return this;
     }
 
 
     //Fonction qui permet de dupliquer un projet
-    public JSONObject duplicateProject(String name)
+    public Project duplicateProject(String name)
     {
         JSONObject req = new JSONObject()
                 .put("name", name);
@@ -132,12 +133,13 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+
+        return this;
     }
 
     //Fonction qui permet de exporter un projet
-    public JSONObject exportProject()
+    public Project exportProject()
     {
         JSONObject req = new JSONObject();
 
@@ -145,12 +147,12 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/export", String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/export", String.class);
+        return this;
     }
 
     //Fonction qui permet de importer un projet
-    public JSONObject importProject()
+    public Project importProject()
     {
         JSONObject req = new JSONObject();
 
@@ -158,12 +160,12 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/import", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/import", entity, String.class);
+        return this;
     }
 
     //Fonction qui permet de voir les notifications
-    public JSONObject notifyProject()
+    public Project notifyProject()
     {
         JSONObject req = new JSONObject();
 
@@ -171,13 +173,13 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/notifications", String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/notifications", String.class);
+        return this;
     }
 
 
     //Fonction qui permet d'ouvir un projet
-    public JSONObject openProject()
+    public Project openProject()
     {
         JSONObject req = new JSONObject();
 
@@ -185,7 +187,7 @@ public class Project extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        String jsonResult = restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/open", entity, String.class);
-        return new JSONObject(jsonResult);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/open", entity, String.class);
+        return this;
     }
 }
