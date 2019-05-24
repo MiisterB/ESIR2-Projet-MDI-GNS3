@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class Project extends RestEntity{
 
@@ -114,7 +115,7 @@ public class Project extends RestEntity{
         JSONObject req = new JSONObject();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/close", entity, String.class);
@@ -130,7 +131,7 @@ public class Project extends RestEntity{
                 .put("name", name);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
@@ -144,7 +145,7 @@ public class Project extends RestEntity{
         JSONObject req = new JSONObject();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/export", String.class);
@@ -157,7 +158,7 @@ public class Project extends RestEntity{
         JSONObject req = new JSONObject();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/import", entity, String.class);
@@ -170,7 +171,7 @@ public class Project extends RestEntity{
         JSONObject req = new JSONObject();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/notifications", String.class);
@@ -184,7 +185,7 @@ public class Project extends RestEntity{
         JSONObject req = new JSONObject();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
         restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/open", entity, String.class);
