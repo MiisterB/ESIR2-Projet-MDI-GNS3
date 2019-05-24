@@ -3,6 +3,9 @@ package lib;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class Project extends RestEntity{
 
@@ -102,6 +105,89 @@ public class Project extends RestEntity{
 
     public Project deleteLink(String id){
         links.deleteEntity(id);
+        return this;
+    }
+
+    //Fonction qui permet de fermer un projet
+    public Project closeProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/close", entity, String.class);
+
+        return this;
+    }
+
+
+    //Fonction qui permet de dupliquer un projet
+    public Project duplicateProject(String name)
+    {
+        JSONObject req = new JSONObject()
+                .put("name", name);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+
+        return this;
+    }
+
+    //Fonction qui permet de exporter un projet
+    public Project exportProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/export", String.class);
+        return this;
+    }
+
+    //Fonction qui permet de importer un projet
+    public Project importProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/import", entity, String.class);
+        return this;
+    }
+
+    //Fonction qui permet de voir les notifications
+    public Project notifyProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.getForObject(m_base_url + "/" + getTrueId() + "/notifications", String.class);
+        return this;
+    }
+
+
+    //Fonction qui permet d'ouvir un projet
+    public Project openProject()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/open", entity, String.class);
         return this;
     }
 }
