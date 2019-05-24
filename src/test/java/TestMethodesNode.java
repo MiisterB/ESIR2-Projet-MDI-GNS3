@@ -54,4 +54,28 @@ public class TestMethodesNode {
         assertEquals("V", project.getNode("V").getName());
         //project.delete();
     }
+
+
+    @Test
+    public void testStartStop() throws InterruptedException {
+
+        Controller controller = new Controller("148.60.11.161");
+
+
+        controller.deleteProject("TestStartStop");
+        Node node = controller
+                .addProject("TestStartStop")
+                .getProject("TestStartStop")
+                .addNode("V", "vpcs", 100, 0)
+                .getNode("V")
+                .startNode();
+
+        controller.getProject("TestStartStop").getNode("V").stopNode();
+
+        Project project = controller
+                .getProject("TestGetLink");
+
+        //assertEquals("V", project.getNode("V").getName());
+        //project.delete();
+    }
 }

@@ -59,7 +59,7 @@ public class Node extends RestEntity{
         return m_entity_id;
     }
 
-    //Fonction qui duplique l'instance d'un noeud
+    //Fonction qui duplique l'instance d'un noeud à l'emplacement (x,y)
     public Node duplicateNode(int x, int y)
     {
         JSONObject req = new JSONObject()
@@ -88,8 +88,8 @@ public class Node extends RestEntity{
         return this;
     }
 
-    //Fonction qui récupère tous les liens reliés à un noeud
-    public Node getLinks()
+    //Fonction qui lance le noeud
+    public Node startNode()
     {
         JSONObject req = new JSONObject();
 
@@ -97,7 +97,22 @@ public class Node extends RestEntity{
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
 
-        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/links", entity, String.class);
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/start", entity, String.class);
         return this;
     }
+
+    //Fonction qui arrête le noeud
+    public Node stopNode()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/stop", entity, String.class);
+        return this;
+    }
+
+
 }
