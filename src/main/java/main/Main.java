@@ -10,12 +10,21 @@ public class Main {
 
         String project_name = "testNodes1";
 
-        controller.deleteProject(project_name);
-        Node s = controller
+        controller
+                .deleteProject(project_name)
+                .addProject(project_name)
+                .getProject(project_name)
+                .addNode("V1", "AAA", -200, 200)
+                .addNode("V2", "vpcs", 0, 200)
+                .addNode("V3", "Alpine Linux", 200, 200)
+                .addNode("V4", "other", 200, 200);
+
+
+/*        Node s = controller
                 .addProject(project_name)
                 .getProject(project_name)
                 .addNode("V1", "vpcs", -200, -200)
-                .addNode("V2", "vpcs", 200, 200)
+                .addNode("V2", "AAA", 200, 200)
                 .addNode("V3", "vpcs", 200, -200)
                 .addNode("V4", "vpcs", -200, 200)
                 .addNode("S", "ethernet_switch", 0, 0)
@@ -30,6 +39,6 @@ public class Main {
                         .addLink(n, s, 0, i);
                 i++;
             }
-        }
+        }*/
     }
 }
