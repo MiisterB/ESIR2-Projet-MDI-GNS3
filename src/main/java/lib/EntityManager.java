@@ -2,30 +2,23 @@ package lib;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class EntityManager<T extends RestEntity> {
-    private RestTemplate restTemplate;
     private EntityTypes m_entity_type;
     private String m_base_url;
 
     EntityManager(String base_url, EntityTypes type) {
-        restTemplate = new RestTemplate();
         m_base_url = base_url;
         m_entity_type = type;
     }
 
     List<T> getEntities() {
         List<T> entities = new ArrayList<>();
-        String jsonResult = restTemplate.getForObject(m_base_url, String.class);
-        JSONArray res = new JSONArray(jsonResult);
+        JSONArray res = RequestHelper.getArray(m_base_url);
         for (int i = 0; i < res.length(); i++) {
             JSONObject e = res.getJSONObject(i);
             T result;
@@ -60,22 +53,14 @@ class EntityManager<T extends RestEntity> {
                 break;
             case Node:
                 if (!Arrays.toString(BuiltInNodes.values()).contains((String) params.get(1))) {
-                    String jsonResult = restTemplate.getForObject(m_base_url.split("/v2")[0] + "/v2/appliances", String.class);
-                    JSONArray res = new JSONArray(jsonResult);
+                    JSONArray res = RequestHelper.getArray(m_base_url.split("/v2")[0] + "/v2/appliances");
                     for (int i = 0; i < res.length(); i++) {
                         JSONObject e = res.getJSONObject(i);
                         if (e.getString("name").equals(params.get(1))) {
-
-                            HttpHeaders headers = new HttpHeaders();
-                            headers.setContentType(MediaType.APPLICATION_JSON);
                             JSONObject req = new JSONObject()
                                     .put("x", (params.size() == 2)? 0 : (int) params.get(2))
                                     .put("y", (params.size() == 2)? 0 : (int) params.get(3));
-                            HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
-
-                            restTemplate.postForObject(
-                                    m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"),
-                                    entity, String.class);
+                            RequestHelper.post(m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"));
                             return;
                         }
                     }
