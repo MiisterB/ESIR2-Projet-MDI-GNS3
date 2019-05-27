@@ -1,3 +1,4 @@
+
 package main;
 
 import lib.Controller;
@@ -41,3 +42,4 @@ public class Main {
         structure.generateStructure();
     }
 }
+
