@@ -157,6 +157,12 @@ public class Project extends RestEntity {
         return this;
     }
 
+    //Fonction qui permet de retourner des notifications sur un projet a partir d'un Websocket
+    public Project notifyWsProject() {
+        RequestHelper.get(m_base_url + "/" + getTrueId() + "/notifications/ws");
+        return this;
+    }
+
 }
 
 
