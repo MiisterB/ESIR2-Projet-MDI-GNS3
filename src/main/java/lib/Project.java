@@ -149,4 +149,14 @@ public class Project extends RestEntity {
         RequestHelper.post(m_base_url + "/" + getTrueId() + "/open");
         return this;
     }
+
+    //Fonction qui ouvre un projet (only local server)
+    public Project loadProject(String path) {
+        JSONObject req = new JSONObject().put("path", path);
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/load", req);
+        return this;
+    }
+
 }
+
+
