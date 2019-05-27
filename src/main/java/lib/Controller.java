@@ -8,7 +8,7 @@ public class Controller {
 
     public Controller(String ip)
     {
-        projects = new EntityManager<>("http://" + ip + ":3080/v2/projects", "Project");
+        projects = new EntityManager<>("http://" + ip + ":3080/v2/projects", EntityTypes.Project);
     }
 
     public List<Project> getProjects(){
