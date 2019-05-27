@@ -44,9 +44,9 @@ public class Main {
         structure1.generateStructure();
         structure1.connectNode(n1,0);
 
-        Structure structure2 = new Structure("B",controller, project_name, 5, 300,200);
+        Structure structure2 = new Structure("B",controller, project_name, 7, 300,200);
         structure2.generateStructure();
-        structure2.connectNode(structure1.getJunctionNode(),6);
+        structure2.connectNode(structure1.getJunctionNode(),7);
     }
 }
 

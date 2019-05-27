@@ -27,8 +27,10 @@ public class Structure
         m_xPosCenter = xPos;
         m_yPosCenter = yPos;
 
-        m_xPosNodes = new int[]{m_xPosCenter,m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter-100};
-        m_yPosNodes = new int[]{m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter,m_xPosCenter+100};
+
+        m_xPosNodes = new int[]{0,+100,+100,+100,0,-100,-100,-100};
+        //m_yPosNodes = new int[]{+100,+100,0,-100,-100,-100,0,+100};
+        m_yPosNodes = new int[]{0,+100,-100,+200,-200,+300,-300,+400};
     }
 
     public void generateStructure()
@@ -41,7 +43,7 @@ public class Structure
 
         for(int j = 0;j<m_nbrNode;j++)
         {
-            m_nodeTab[j] = m_controller.getProject(m_projectName).addNode(m_name+j,"vpcs",m_xPosNodes[j], m_yPosNodes[j]).getNode(m_name+j);
+            m_nodeTab[j] = m_controller.getProject(m_projectName).addNode(m_name+j,"vpcs",m_xPosCenter-100, m_yPosCenter + m_yPosNodes[j]).getNode(m_name+j);
         }
 
         int i = 0;
@@ -62,6 +64,7 @@ public class Structure
         {
             m_nbrNode++;
             m_controller.getProject(m_projectName).addLink(node, m_junctionNode, intPort, m_nbrNode-1);
+            System.out.println("Erreur lors de la création de la liaison");
         }
     }
 
