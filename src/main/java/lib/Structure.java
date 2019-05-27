@@ -6,9 +6,9 @@ public class Structure
     private Controller m_controller;
     private String m_projectName;
     private int m_nbrNode;
-    private Node m_externalNodeJunction;
     private String m_name;
     private Node[] m_nodeTab;
+    private Node m_junctionNode;
 
     private int m_xPosCenter;
     private int m_yPosCenter;
@@ -16,7 +16,7 @@ public class Structure
     private int[] m_xPosNodes;
     private int[] m_yPosNodes;
 
-    public Structure(String name, Controller controller, String projectName, int nbrNode, int xPos, int yPos)
+    public Structure(String name,Controller controller, String projectName, int nbrNode, int xPos, int yPos)
     {
         m_controller = controller;
         m_projectName = projectName;
@@ -27,33 +27,17 @@ public class Structure
         m_xPosCenter = xPos;
         m_yPosCenter = yPos;
 
-        m_xPosNodes = new int[]{m_xPosCenter,m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter-200};
-        m_yPosNodes = new int[]{m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter,m_xPosCenter+200};
+        m_xPosNodes = new int[]{m_xPosCenter,m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter-100};
+        m_yPosNodes = new int[]{m_xPosCenter+100,m_xPosCenter+100,m_xPosCenter,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter-100,m_xPosCenter,m_xPosCenter+100};
     }
 
-    public Structure(String name,Controller controller, String projectName, int nbrNode, int xPos, int yPos, Node nodeJunction)
-    {
-        m_controller = controller;
-        m_projectName = projectName;
-        m_nbrNode = nbrNode;
-        m_name = name;
-        m_nodeTab = new Node[m_nbrNode];
-
-        m_xPosCenter = xPos;
-        m_yPosCenter = yPos;
-
-        m_xPosNodes = new int[]{m_xPosCenter,m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter-200};
-        m_yPosNodes = new int[]{m_xPosCenter+200,m_xPosCenter+200,m_xPosCenter,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter-200,m_xPosCenter,m_xPosCenter+200};
-        m_externalNodeJunction = nodeJunction;
-    }
-
-    public Node generateStructure()
+    public void generateStructure()
     {
         //Create junction node
         m_controller.getProject(m_projectName)
                 .addNode(m_name, "ethernet_switch", m_xPosCenter, m_yPosCenter);
 
-        Node junctionNode = m_controller.getProject(m_projectName).getNode(m_name);
+        m_junctionNode = m_controller.getProject(m_projectName).getNode(m_name);
 
         for(int j = 0;j<m_nbrNode;j++)
         {
@@ -67,16 +51,22 @@ public class Structure
         {
             m_controller
                     .getProject(m_projectName)
-                    .addLink(n, junctionNode, 0, i);
+                    .addLink(n, m_junctionNode, 0, i);
             i++;
         }
+    }
 
-        //Link with the junctionNode
-        if(junctionNode !=null)
+    public void connectNode(Node node, int intPort)
+    {
+        if(m_nbrNode + 1 < 8)
         {
-            m_controller.getProject(m_projectName).addLink(junctionNode, m_externalNodeJunction);
+            m_nbrNode++;
+            m_controller.getProject(m_projectName).addLink(node, m_junctionNode, intPort, m_nbrNode-1);
         }
+    }
 
-        return junctionNode;
+    public Node getJunctionNode()
+    {
+        return m_controller.getProject(m_projectName).getNode(m_name);
     }
 }

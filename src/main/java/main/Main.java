@@ -38,12 +38,15 @@ public class Main {
 
         controller.addProject(project_name);
 
-        Node n1 = controller.getProject(project_name).addNode("N1","vpcs",-500,0).getNode("N1");
+        Node n1 = controller.getProject(project_name).addNode("N1","vpcs",-200,0).getNode("N1");
 
-        Structure structure1 = new Structure("A",controller, project_name, 5, 200,200, n1);
-        Node n2 = structure1.generateStructure();
-        Structure structure2 = new Structure("B",controller, project_name, 5, 400,200);
+        Structure structure1 = new Structure("A",controller, project_name, 5, 100,200);
+        structure1.generateStructure();
+        structure1.connectNode(n1,0);
+
+        Structure structure2 = new Structure("B",controller, project_name, 5, 300,200);
         structure2.generateStructure();
+        structure2.connectNode(structure1.getJunctionNode(),6);
     }
 }
 
