@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Controller controller = new Controller("148.60.11.161");
 
-        String project_name = "testNodes1";
+        String project_name = "testMain";
 
         controller
                 .deleteProject(project_name)

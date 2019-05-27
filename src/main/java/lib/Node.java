@@ -1,5 +1,8 @@
 package lib;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class Node extends RestEntity{
 
@@ -55,4 +58,61 @@ public class Node extends RestEntity{
     public String getTrueId() {
         return m_entity_id;
     }
+
+    //Fonction qui duplique l'instance d'un noeud à l'emplacement (x,y)
+    public Node duplicateNode(int x, int y)
+    {
+        JSONObject req = new JSONObject()
+                .put("x", x)
+                .put("y", y)
+                .put("z",0);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/duplicate", entity, String.class);
+        return this;
+    }
+
+    //Fonction qui recharge l'instance d'un noeud
+    public Node reloadNode()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/reload", entity, String.class);
+        return this;
+    }
+
+    //Fonction qui lance le noeud
+    public Node startNode()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/start", entity, String.class);
+        return this;
+    }
+
+    //Fonction qui arrête le noeud
+    public Node stopNode()
+    {
+        JSONObject req = new JSONObject();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
+
+        restTemplate.postForObject(m_base_url + "/" + getTrueId() + "/stop", entity, String.class);
+        return this;
+    }
+
+
 }
