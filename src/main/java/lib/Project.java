@@ -1,14 +1,8 @@
 package lib;
 
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class Project extends RestEntity {
 

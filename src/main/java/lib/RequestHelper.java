@@ -26,10 +26,13 @@ public class RequestHelper {
         return new JSONObject(jsonResult);
     }
 
-
     public static JSONObject get(String url){
         String jsonResult = restTemplate.getForObject(url, String.class);
         return new JSONObject(jsonResult);
+    }
+
+    public static void delete(String url){
+        restTemplate.delete(url);
     }
 
 }
