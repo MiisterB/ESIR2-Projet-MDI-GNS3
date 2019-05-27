@@ -15,6 +15,8 @@ public class Controller {
         return projects.getEntities();
     }
 
+   // public Controller deleteAllProjects
+
     public Controller addProject(String name){
         List<Object> params = new ArrayList();
         params.add(name);
