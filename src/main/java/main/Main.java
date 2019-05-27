@@ -2,6 +2,7 @@ package main;
 
 import lib.Controller;
 import lib.Node;
+import lib.Structure;
 
 public class Main {
 
@@ -31,7 +32,12 @@ public class Main {
                 i++;
             }
         }*/
+        String project_name = "testStructure";
+        controller.deleteProject(project_name);
 
+        controller.addProject(project_name);
 
+        Structure structure = new Structure(controller, project_name, 8, 200,200);
+        structure.generateStructure();
     }
 }
