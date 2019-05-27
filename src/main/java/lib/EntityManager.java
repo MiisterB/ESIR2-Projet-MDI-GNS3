@@ -60,7 +60,7 @@ class EntityManager<T extends RestEntity> {
                             JSONObject req = new JSONObject()
                                     .put("x", (params.size() == 2)? 0 : (int) params.get(2))
                                     .put("y", (params.size() == 2)? 0 : (int) params.get(3));
-                            RequestHelper.post(m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"));
+                            RequestHelper.post(m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"), req);
                             return;
                         }
                     }

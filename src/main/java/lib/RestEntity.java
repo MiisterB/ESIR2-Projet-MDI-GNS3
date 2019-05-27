@@ -13,7 +13,7 @@ public abstract class RestEntity {
 
     JSONObject create(JSONObject req){
         JSONObject jsonResult = RequestHelper.post(m_base_url, req);
-        return new JSONObject(jsonResult);
+        return jsonResult;
     }
 
     public void delete(){
