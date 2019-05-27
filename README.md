@@ -4,7 +4,7 @@
 
 ### Description du projet
 
-Le projet consiste à créer une _API_ _fluent_ _pour_ _GNS3_.
+Le projet consiste à créer une _API fluent pour GNS3_.
 
 <p> GNS3 est un logiciel libre permettant l'emulation ou la simulation de réseaux informatiques. Il est beaucoup utilisé dans le domaine des réseaux et télecom.</p> 
 
@@ -31,9 +31,9 @@ Structure du code source :
 
 L'équipe projet STOB-GNS3 est coposée de :
 
-* _S_imon Moisan
-* _T_imothée Schneider-Maunoury
-* _O_umar Ballo
-* _B_esma Kaouane
+* Simon Moisan
+* Timothée Schneider-Maunoury
+* Oumar Ballo
+* Besma Kaouane
 
 L'origine du nom du groupe provient de nos initials..
