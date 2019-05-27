@@ -1,5 +1,6 @@
 package lib;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +30,11 @@ public class RequestHelper {
     public static JSONObject get(String url){
         String jsonResult = restTemplate.getForObject(url, String.class);
         return new JSONObject(jsonResult);
+    }
+
+    public static JSONArray getArray(String url){
+        String jsonResult = restTemplate.getForObject(url, String.class);
+        return new JSONArray(jsonResult);
     }
 
     public static void delete(String url){
