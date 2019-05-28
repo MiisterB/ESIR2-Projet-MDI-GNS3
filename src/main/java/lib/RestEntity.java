@@ -9,6 +9,10 @@ public abstract class RestEntity {
         m_base_url = base_url;
     }
 
+    public void update(){
+
+    }
+
     public void delete(){
         RequestHelper.delete(m_base_url + "/" + m_entity_id);
     }
