@@ -27,7 +27,7 @@ public class Link extends RestEntity{
                                 .put("adapter_number", 0)
                                 .put("node_id", m_n2.getTrueId())
                                 .put("port_number", 0)));
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("link_id");
     }
 
@@ -47,7 +47,7 @@ public class Link extends RestEntity{
                                 .put("adapter_number", 0)
                                 .put("node_id", m_n2.getTrueId())
                                 .put("port_number", m_port2)));
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("link_id");
     }
 

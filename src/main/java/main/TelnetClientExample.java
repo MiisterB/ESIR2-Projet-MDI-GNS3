@@ -14,7 +14,7 @@ public class TelnetClientExample {
 
         TelnetClient telnet = new TelnetClient();
         try {
-            telnet.connect("148.60.11.161", 5007);
+            telnet.connect("148.60.11.161", 5027);
 
             InputStream inputStream = telnet.getInputStream();
             OutputStream outputStream = telnet.getOutputStream();

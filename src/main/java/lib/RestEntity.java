@@ -1,7 +1,5 @@
 package lib;
 
-import org.json.JSONObject;
-
 public abstract class RestEntity {
 
     String m_entity_id;
@@ -9,11 +7,6 @@ public abstract class RestEntity {
 
     RestEntity(String base_url){
         m_base_url = base_url;
-    }
-
-    JSONObject create(JSONObject req){
-        JSONObject jsonResult = RequestHelper.post(m_base_url, req);
-        return jsonResult;
     }
 
     public void delete(){

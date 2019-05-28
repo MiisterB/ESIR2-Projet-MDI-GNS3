@@ -23,7 +23,7 @@ public class Node extends RestEntity{
                 .put("name", getName())
                 .put("node_type", m_node_type)
                 .put("compute_id", "local");
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("node_id");
     }
 
@@ -40,7 +40,7 @@ public class Node extends RestEntity{
                 .put("compute_id", "local")
                 .put("x", m_x)
                 .put("y", m_y);
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("node_id");
     }
 
