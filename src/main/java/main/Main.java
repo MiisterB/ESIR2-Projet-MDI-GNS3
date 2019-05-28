@@ -1,8 +1,9 @@
 package main;
 
-import lib.BuiltInNodes;
+import lib.CmdHelper;
 import lib.Controller;
-import lib.Node;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -12,7 +13,22 @@ public class Main {
 
         String project_name = "Demo_test";
 
-        Node S = controller
+        System.out.println(
+                controller
+                .getProject(project_name)
+                .getNode("N4")
+                .sendCmd("!mkdir test")
+                .sendCmdAndWaitResp("!ls"));
+
+        System.out.println(
+                controller
+                        .getProject(project_name)
+                        .getNode("N4")
+                        .sendCmd("!rmdir test")
+                        .sendCmdAndWaitResp("!ls"));
+
+
+/*        Node S = controller
                 .deleteProject(project_name)
                 .addProject(project_name)
                 .getProject(project_name)
@@ -30,7 +46,7 @@ public class Main {
                 controller.getProject(project_name).addLink(n, S, 0, i);
                 i++;
             }
-        }
+        }*/
 
 /*        String project_name = "testStructure";
         controller.deleteProject(project_name);

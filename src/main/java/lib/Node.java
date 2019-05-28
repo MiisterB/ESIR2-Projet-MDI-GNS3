@@ -1,6 +1,8 @@
 package lib;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class Node extends RestEntity{
 
     private String m_name;
@@ -87,5 +89,38 @@ public class Node extends RestEntity{
     {
        RequestHelper.post(m_base_url + "/" + getTrueId() + "/stop");
         return this;
+    }
+
+    public Node sendCmd(String  cmd){
+        String ip = m_base_url
+                .split(":3080")[0]
+                .split("//")[1];
+        JSONObject n = RequestHelper.get(m_base_url + "/" + getTrueId());
+        int port = n.getInt("console");
+
+        try {
+            CmdHelper.write(ip, port, cmd);
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    public String sendCmdAndWaitResp(String cmd){
+        String ip = m_base_url
+                .split(":3080")[0]
+                .split("//")[1];
+        JSONObject n = RequestHelper.get(m_base_url + "/" + getTrueId());
+        int port = n.getInt("console");
+
+        String result = "";
+
+        try {
+            CmdHelper.write(ip, port, cmd);
+            result = CmdHelper.read(ip, port, true);
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
