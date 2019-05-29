@@ -71,6 +71,10 @@ public class Project extends RestEntity {
         return nodes.getEntity(name);
     }
 
+    public Node getNodeByID(String id) {
+        return nodes.getEntityById(id);
+    }
+
     public Project deleteNode(String name) {
         nodes.deleteEntity(name);
         return this;
@@ -99,7 +103,7 @@ public class Project extends RestEntity {
     }
 
     public Link getLink(String id) {
-        return links.getEntity(id);
+        return links.getEntityById(id);
     }
 
     public Project deleteLink(String id) {

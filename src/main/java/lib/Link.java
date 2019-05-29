@@ -4,9 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Link extends RestEntity{
-    private Node m_n1;
-    private Node m_n2;
-    private int m_port1, m_port2;
 
     Link(String base_url, String entity_id){
         super(base_url);
@@ -15,39 +12,43 @@ public class Link extends RestEntity{
 
     Link(String base_url, Node n1, Node n2, int p1, int p2){
         super(base_url);
-        m_n1 = n1;
-        m_n2 = n2;
-        m_port1 = p1;
-        m_port2 = p2;
         JSONObject req = new JSONObject()
                 .put("nodes", new JSONArray()
                         .put(new JSONObject()
                                 .put("adapter_number", 0)
-                                .put("node_id", m_n1.getTrueId())
-                                .put("port_number", m_port1))
+                                .put("node_id", n1.getTrueId())
+                                .put("port_number", p1))
                         .put(new JSONObject()
                                 .put("adapter_number", 0)
-                                .put("node_id", m_n2.getTrueId())
-                                .put("port_number", m_port2)));
+                                .put("node_id", n2.getTrueId())
+                                .put("port_number", p2)));
         JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("link_id");
     }
 
 
     public Node getFirstNode() {
-        return m_n1;
+        String firstNodeId = this.get()
+                .getJSONArray("nodes")
+                .getJSONObject(0)
+                .getString("node_id");
+        String projectId = this.get()
+                .getString("project_id");
+        return new Controller(m_base_url.split(":3080")[0].split("//")[1])
+                .getProjectById(projectId)
+                .getNodeByID(firstNodeId);
     }
 
     public Node getSecondNode() {
-        return m_n2;
+        return null;
     }
 
     public int getFirstNodePort() {
-        return m_port1;
+        return 0;
     }
 
     public int getSecondNodePort() {
-        return m_port2;
+        return 0;
     }
 
     public String getLinkID(){

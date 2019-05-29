@@ -14,6 +14,11 @@ public class Main {
         Node n = controller
                 .getProject(project_name2)
                 .getNode("N");
+
+        Node n = controller
+                .getProject(project_name2)
+                .getNode("N");
+
         System.out.println(n
                 .sendCmd("mkdir besma")
                 .sendCmdAndWaitResp("ls"));*/
