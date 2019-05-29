@@ -31,14 +31,9 @@ public class TestMethodesLink {
                 .addNode("n2", "vpcs", 10, 10)
                 .addLink(project.getNode("n1"), project.getNode("n2"))
                 .getLinks();
-        if( l.isEmpty()){
-            assertNull(l);
-        }
-        else {
-            assertEquals(project.getNode("n1"), l.get(0).getFirstNode());
 
-        }
-        project.delete();
+        assertEquals("n1", l.get(0).getFirstNode().getName());
+        //project.delete();
     }
 
 }

@@ -36,7 +36,7 @@ public class Link extends RestEntity{
                 .getString("project_id");
         return new Controller(m_base_url.split(":3080")[0].split("//")[1])
                 .getProjectById(projectId)
-                .getNode(firstNodeId);
+                .getNodeByID(firstNodeId);
     }
 
     public Node getSecondNode() {
