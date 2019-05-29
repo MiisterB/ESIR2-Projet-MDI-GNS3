@@ -15,10 +15,14 @@ public class Project extends RestEntity {
     private String m_name;
     private EntityManager<Node> nodes;
     private EntityManager<Link> links;
+    private EntityManager<Docker> dockerNodes;
 
     private void initializeManagers(String base_url) {
         nodes = new EntityManager<>(base_url + "/" + getTrueId() + "/nodes", EntityTypes.Node);
         links = new EntityManager<>(base_url + "/" + getTrueId() + "/links", EntityTypes.Link);
+        String dockerURL = base_url.split("/v2/")[0] + "/v2/compute/projects";
+        dockerNodes = new EntityManager<>(dockerURL + "/" + getTrueId() + "/docker/nodes", EntityTypes.Docker);
+
     }
 
     Project(String base_url, String name, String entity_id) {
