@@ -1,11 +1,9 @@
 package lib;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import javax.print.Doc;
 
 public class Docker extends RestEntity{
 
@@ -69,6 +67,33 @@ public class Docker extends RestEntity{
     public Docker reloadDocker() {
 
         RequestHelper.post(m_base_url + "/" + getTrueId() + "/reload");
+        return this;
+    }
+
+    //Fonction qui permet de demarrer un conteneur docker
+    public Docker startDocker() {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/start");
+        return this;
+    }
+
+    //Fonction qui permet de stopper un conteneur docker
+    public Docker stopDocker() {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/stop");
+        return this;
+    }
+    //Fonction qui permet de suspendre un conteneur docker
+    public Docker suspendDocker() {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/suspend");
+        return this;
+    }
+
+    //Unpause a Docker container
+    public Docker unpauseDocker() {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/unpause");
         return this;
     }
 
