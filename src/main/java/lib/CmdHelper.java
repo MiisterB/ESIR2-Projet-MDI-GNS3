@@ -10,19 +10,15 @@ import java.nio.charset.StandardCharsets;
 
 public class CmdHelper {
 
-    private static int deleteLastLines = 2;
-    private static int timeToSleep = 1000;
+    private static int deleteLastLines = 0;
+    private static int timeToSleep = 500;
 
 
-    private static String read(InputStream inputStream, boolean wait) throws IOException, InterruptedException {
+    private static String read(InputStream inputStream) throws IOException, InterruptedException {
         Thread.sleep(timeToSleep);
 
         byte[] buffer = new byte[4096];
         int i = 0;
-
-        while (wait && inputStream.available() == 0){
-            Thread.sleep(100);
-        }
 
         while (inputStream.available() > 0){
             buffer[i] = (byte) inputStream.read();
@@ -46,14 +42,14 @@ public class CmdHelper {
             telnet.connect(ip, port);
             InputStream inputStream = telnet.getInputStream();
             OutputStream outputStream = telnet.getOutputStream();
-            if (!cmd.equals("")){
-                write(outputStream, cmd);
-                result += CmdHelper.read(inputStream, false);
-            }
+
+            write(outputStream, cmd);
+            result += CmdHelper.read(inputStream);
+
 
             if (deleteLastLines > 0){
                 String[] lines = result.split("\r");
-                result = " > ";
+                result = "";
                 for (int j = 0; j < (lines.length - deleteLastLines); j++) {
                     result += lines[j];
                 }
