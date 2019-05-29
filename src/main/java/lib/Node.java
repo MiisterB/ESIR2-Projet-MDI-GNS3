@@ -1,10 +1,6 @@
 package lib;
-import org.apache.commons.net.telnet.TelnetClient;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class Node extends RestEntity{
 

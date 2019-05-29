@@ -1,5 +1,4 @@
 package lib;
-import java.lang.Math.*;
 
 public class Structure
 {
@@ -213,5 +212,10 @@ public class Structure
     public String getOrientation()
     {
         return m_orientation;
+    }
+
+    public Node getJunctionNode()
+    {
+        return m_junctionNode;
     }
 }
