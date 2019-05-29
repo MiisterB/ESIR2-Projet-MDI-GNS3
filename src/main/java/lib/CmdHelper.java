@@ -10,14 +10,12 @@ import java.nio.charset.StandardCharsets;
 
 public class CmdHelper {
 
-    private static int deleteLastLines = 0;
-    private static int timeToSleep = 500;
+    private static int deleteLastLines = 2;
+    private static int timeToSleep = 1000;
 
 
     private static String read(InputStream inputStream) throws IOException, InterruptedException {
-        Thread.sleep(timeToSleep);
-
-        byte[] buffer = new byte[4096];
+         byte[] buffer = new byte[4096];
         int i = 0;
 
         while (inputStream.available() > 0){
@@ -28,13 +26,28 @@ public class CmdHelper {
     }
 
     private static void write(OutputStream outputStream, String cmd) throws InterruptedException, IOException {
-        Thread.sleep(timeToSleep);
         outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
     }
 
 
-    public static String writeAndRead(String ip, int port, String cmd){
+    public static void write(String ip, int port, String cmd){
+        TelnetClient telnet = new TelnetClient();
+        try {
+            telnet.connect(ip, port);
+            OutputStream outputStream = telnet.getOutputStream();
+            InputStream inputStream   = telnet.getInputStream();
+
+            write(outputStream, cmd);
+
+            inputStream.read();
+            telnet.disconnect();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String writeAndRead(String ip, int port, String cmd) {
         String result = " > ";
 
         TelnetClient telnet = new TelnetClient();
@@ -43,7 +56,9 @@ public class CmdHelper {
             InputStream inputStream = telnet.getInputStream();
             OutputStream outputStream = telnet.getOutputStream();
 
+            Thread.sleep(timeToSleep);
             write(outputStream, cmd);
+            Thread.sleep(timeToSleep);
             result += CmdHelper.read(inputStream);
 
 
@@ -63,17 +78,76 @@ public class CmdHelper {
         return result;
     }
 
-    public static void write(String ip, int port, String cmd){
+    public static String writeAndReadUntil(String ip, int port, String cmd, String text, int timeOut) {
+        String result = " > ";
+
         TelnetClient telnet = new TelnetClient();
         try {
             telnet.connect(ip, port);
+            InputStream inputStream = telnet.getInputStream();
             OutputStream outputStream = telnet.getOutputStream();
 
             write(outputStream, cmd);
+
+            int counter = 0;
+            while(!result.contains(text)){
+                result += CmdHelper.read(inputStream);
+                Thread.sleep(100);
+                counter += 100;
+                if (counter >= timeOut){
+                    break;
+                }
+            }
+
+            if (deleteLastLines > 0){
+                String[] lines = result.split("\r");
+                result = "";
+                for (int j = 0; j < (lines.length - deleteLastLines); j++) {
+                    result += lines[j];
+                }
+            }
 
             telnet.disconnect();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        return result;
     }
+
+    public static String readUntil(String ip, int port, String text, int timeOut) {
+        String result = " > ";
+
+        TelnetClient telnet = new TelnetClient();
+        try {
+            telnet.connect(ip, port);
+            InputStream inputStream = telnet.getInputStream();
+            OutputStream outputStream = telnet.getOutputStream();
+
+            int counter = 0;
+            while(!result.contains(text)){
+                result += CmdHelper.read(inputStream);
+                Thread.sleep(100);
+                counter += 100;
+                if (counter >= timeOut){
+                    break;
+                }
+            }
+
+            if (deleteLastLines > 0){
+                String[] lines = result.split("\r");
+                result = "";
+                for (int j = 0; j < (lines.length - deleteLastLines); j++) {
+                    result += lines[j];
+                }
+            }
+
+            telnet.disconnect();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 }

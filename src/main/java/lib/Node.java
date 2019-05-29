@@ -76,15 +76,6 @@ public class Node extends RestEntity{
         return this;
     }
 
-    public String sendCmdAndGetResp(String cmd){
-        String ip = m_base_url.split(":3080")[0].split("//")[1];
-        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
-
-        String result = CmdHelper.writeAndRead(ip, port, cmd);
-
-        return result;
-    }
-
     public Node sendCmd(String cmd){
         String ip = m_base_url.split(":3080")[0].split("//")[1];
         int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
@@ -92,5 +83,28 @@ public class Node extends RestEntity{
         CmdHelper.write(ip, port, cmd);
 
         return this;
+    }
+
+    public String sendCmdAndGetResp(String cmd){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        return CmdHelper.writeAndRead(ip, port, cmd);
+    }
+
+    // text can be 'VPCS>', 'root@N:~#' or something else
+    // the unit of timeOut is milliseconds
+    public String sendCmdAndReadUntil(String cmd, String text, int timeOut){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        return CmdHelper.writeAndReadUntil(ip, port, cmd, text, timeOut);
+    }
+
+    public String readUntil(String text, int timeOut){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        return CmdHelper.readUntil(ip, port, text, timeOut);
     }
 }
