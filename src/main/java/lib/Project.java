@@ -27,7 +27,7 @@ public class Project extends RestEntity {
         m_name = name;
 
         JSONObject req = new JSONObject().put("name", getName());
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("project_id");
 
         initializeManagers(base_url);

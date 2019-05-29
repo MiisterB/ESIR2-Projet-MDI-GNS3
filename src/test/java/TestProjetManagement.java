@@ -7,7 +7,23 @@ import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
-public class Test2 {
+public class TestProjetManagement {
+
+    @Test
+    public void testProjectsManagement(){
+//        Controller controller = new Controller("148.60.11.161");
+//
+//        List<Project> projects = controller.getProjects();
+//
+//        controller.addProject("testAuto")
+//                .getProject("testAuto")
+//                .delete();
+//        controller.addProject("testAuto");
+//        controller.deleteProject("testAuto");
+//
+//        assertEquals(projects, controller.getProjects());
+
+    }
 
     @Test
     public void testNodesAndLinksManagement() throws InterruptedException {
@@ -42,28 +58,5 @@ public class Test2 {
         assertEquals(links, project.getLinks());
 
         project.delete();
-    }
-
-    @Test
-    public void testErrorWrongNodeType() throws InterruptedException {
-        try
-        {
-            Controller controller = new Controller("148.60.11.161");
-            controller.deleteProject("testAuto");
-            Project project = controller.addProject("testAuto")
-                    .getProject("testAuto");
-
-            controller
-                    .getProject("testAuto")
-                    .addNode("n1", "azeadazda", 0, 0);
-
-
-            project.delete();
-        }
-        catch(Exception e)
-        {
-            assertEquals("org.springframework.web.client.HttpClientErrorException: 400 Bad Request",e);
-            //assertThat(e).isIn("org.springframework.web.client.HttpClientErrorException: 400 Bad Request","org.springframework.web.client.HttpClientErrorException<org.springframework.web.client.HttpClientErrorException: 400 Bad Request>");
-        }
     }
 }

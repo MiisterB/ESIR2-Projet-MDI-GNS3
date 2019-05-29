@@ -11,13 +11,14 @@ public abstract class RestEntity {
         m_base_url = base_url;
     }
 
-    JSONObject create(JSONObject req){
-        JSONObject jsonResult = RequestHelper.post(m_base_url, req);
-        return jsonResult;
+    public RestEntity update(JSONObject req){
+        RequestHelper.put(m_base_url + "/" + m_entity_id, req);
+        return this;
     }
 
-    public void delete(){
+    public RestEntity delete(){
         RequestHelper.delete(m_base_url + "/" + m_entity_id);
+        return this;
     }
 
     public String getId() {

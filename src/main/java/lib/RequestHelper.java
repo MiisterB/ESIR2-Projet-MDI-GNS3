@@ -13,16 +13,20 @@ public class RequestHelper {
     private static RestTemplate restTemplate = new RestTemplate();
     private static JSONObject   emptyReq     = new JSONObject();
 
+    private static  HttpEntity<String> getJSONEntity(JSONObject req){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new HttpEntity<>(req.toString(), headers);
+    }
+
     public static JSONObject post(String url){
-        String jsonResult = restTemplate.postForObject(url, emptyReq, String.class);
+        HttpEntity<String> entity = getJSONEntity(emptyReq);
+        String jsonResult = restTemplate.postForObject(url, entity, String.class);
         return new JSONObject(jsonResult);
     }
 
     public static JSONObject post(String url, JSONObject req){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<>(req.toString(), headers);
-
+        HttpEntity<String> entity = getJSONEntity(req);
         String jsonResult = restTemplate.postForObject(url, entity, String.class);
         return new JSONObject(jsonResult);
     }
@@ -39,6 +43,11 @@ public class RequestHelper {
 
     public static void delete(String url){
         restTemplate.delete(url);
+    }
+
+    public static void put(String url, JSONObject req){
+        HttpEntity<String> entity = getJSONEntity(req);
+        restTemplate.put(url, entity);
     }
 
 }

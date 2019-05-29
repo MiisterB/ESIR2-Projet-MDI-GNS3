@@ -9,6 +9,30 @@ import static org.junit.Assert.assertEquals;
 
 public class TestMethodesNode {
 
+
+    @Test
+    public void testErrorWrongNodeType() throws InterruptedException {
+        try
+        {
+            Controller controller = new Controller("148.60.11.161");
+            controller.deleteProject("testAuto");
+            Project project = controller.addProject("testAuto")
+                    .getProject("testAuto");
+
+            controller
+                    .getProject("testAuto")
+                    .addNode("n1", "azeadazda", 0, 0);
+
+
+            project.delete();
+        }
+        catch(Exception e)
+        {
+            assertEquals("org.springframework.web.client.HttpClientErrorException: 400 Bad Request",e);
+            //assertThat(e).isIn("org.springframework.web.client.HttpClientErrorException: 400 Bad Request","org.springframework.web.client.HttpClientErrorException<org.springframework.web.client.HttpClientErrorException: 400 Bad Request>");
+        }
+    }
+
     @Test
     public void testDuplicateNodes() throws InterruptedException {
 

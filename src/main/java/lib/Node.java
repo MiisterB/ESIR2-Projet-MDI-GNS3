@@ -1,5 +1,10 @@
 package lib;
+import org.apache.commons.net.telnet.TelnetClient;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Node extends RestEntity{
 
@@ -12,19 +17,6 @@ public class Node extends RestEntity{
         m_name = name;
         m_node_type = node_type;
         m_entity_id = entity_id;
-    }
-
-    Node(String base_url, String name, String node_type){
-        super(base_url);
-        m_name = name;
-        m_node_type = node_type;
-
-        JSONObject req = new JSONObject()
-                .put("name", getName())
-                .put("node_type", m_node_type)
-                .put("compute_id", "local");
-        JSONObject res = super.create(req);
-        m_entity_id = res.getString("node_id");
     }
 
     Node(String base_url, String name, String node_type, int x, int y){
@@ -40,7 +32,7 @@ public class Node extends RestEntity{
                 .put("compute_id", "local")
                 .put("x", m_x)
                 .put("y", m_y);
-        JSONObject res = super.create(req);
+        JSONObject res = RequestHelper.post(base_url, req);
         m_entity_id = res.getString("node_id");
     }
 
@@ -87,5 +79,32 @@ public class Node extends RestEntity{
     {
        RequestHelper.post(m_base_url + "/" + getTrueId() + "/stop");
         return this;
+    }
+
+    public String sendCmdAndWaitResp(String cmd){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        String result = CmdHelper.writeAndRead(ip, port, cmd);
+
+        return result;
+    }
+
+    public Node sendCmd(String cmd){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        CmdHelper.write(ip, port, cmd);
+
+        return this;
+    }
+
+    public String waitConsoleOutput(){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        String result = CmdHelper.writeAndRead(ip, port, "");
+
+        return result;
     }
 }
