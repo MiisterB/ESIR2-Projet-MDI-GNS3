@@ -50,5 +50,26 @@ public class Docker extends RestEntity{
         return new JSONObject(jsonResult);
     }
 
-    
+    //Fonction qui permet de dupliquer un docker
+    public Docker duplicateDocker(String destination_node_id) {
+
+        JSONObject req = new JSONObject().put("destination_node_id", destination_node_id);
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/duplicate", req);
+        return this;
+    }
+
+    //Fonction qui permet de mettre un docker en pause
+    public Docker pauseDocker(String destination_node_id) {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/pause");
+        return this;
+    }
+
+    //Fonction qui permet de redemarrer un conteneur docker
+    public Docker reloadDocker(String destination_node_id) {
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/reload");
+        return this;
+    }
+
 }
