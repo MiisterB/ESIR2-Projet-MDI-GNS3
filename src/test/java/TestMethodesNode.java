@@ -31,7 +31,7 @@ public class TestMethodesNode {
         assertEquals("V1", project.getNode("V1").getName());
         assertEquals("V2", project.getNode("V2").getName());
 
-        //project.delete();
+        project.delete();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TestMethodesNode {
                 .getProject("TestReloadNode");
 
         assertEquals("V", project.getNode("V").getName());
-        //project.delete();
+        project.delete();
     }
 
 
@@ -76,6 +76,6 @@ public class TestMethodesNode {
                 .getProject("TestGetLink");
 
         //assertEquals("V", project.getNode("V").getName());
-        //project.delete();
+        project.delete();
     }
 }

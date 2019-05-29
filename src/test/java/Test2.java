@@ -41,6 +41,7 @@ public class Test2 {
         assertEquals(nodes, project.getNodes());
         assertEquals(links, project.getLinks());
 
+        project.delete();
     }
 
     @Test
