@@ -11,6 +11,34 @@ class EntityManager<T extends RestEntity> {
     private EntityTypes m_entity_type;
     private String m_base_url;
 
+    private void createApplianceNode(List<Object> params){
+        boolean applianceCreated = false;
+        JSONArray res = RequestHelper.getArray(m_base_url.split("/v2")[0] + "/v2/appliances");
+        for (int i = 0; i < res.length(); i++) {
+            JSONObject e = res.getJSONObject(i);
+            if (e.getString("name").equals(params.get(1))) {
+                JSONObject req = new JSONObject()
+                        .put("x", (params.size() == 2) ? 0 : (int) params.get(2))
+                        .put("y", (params.size() == 2) ? 0 : (int) params.get(3));
+
+                JSONObject response = RequestHelper.post(m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"), req);
+                String applianceID = response.getString("node_id");
+                JSONArray nodes = RequestHelper.getArray(m_base_url);
+                for (int j = 0; j < nodes.length(); j++) {
+                    String nodeID = nodes.getJSONObject(j).getString("node_id");
+                    if (nodeID.equals(applianceID)) {
+                        RequestHelper.put(m_base_url + "/" + nodeID, new JSONObject().put("name", params.get(0)));
+                    }
+                }
+                applianceCreated = true;
+            }
+        }
+        if (!applianceCreated){
+            System.out.println("The appliance '" + params.get(1) + "' do not exist or is not yet installed ...");
+        }
+    }
+
+
     EntityManager(String base_url, EntityTypes type) {
         m_base_url = base_url;
         m_entity_type = type;
@@ -51,33 +79,26 @@ class EntityManager<T extends RestEntity> {
             case Project:
                 new Project(m_base_url, (String) params.get(0));
                 break;
+
             case Node:
                 if (!Arrays.toString(BuiltInNodes.values()).contains((String) params.get(1))) {
-                    JSONArray res = RequestHelper.getArray(m_base_url.split("/v2")[0] + "/v2/appliances");
-                    for (int i = 0; i < res.length(); i++) {
-                        JSONObject e = res.getJSONObject(i);
-                        if (e.getString("name").equals(params.get(1))) {
-                            JSONObject req = new JSONObject()
-                                    .put("x", (params.size() == 2)? 0 : (int) params.get(2))
-                                    .put("y", (params.size() == 2)? 0 : (int) params.get(3));
-                            RequestHelper.post(m_base_url.split("/nodes")[0] + "/appliances/" + e.getString("appliance_id"), req);
-                            return;
-                        }
-                    }
-                    System.out.println("The appliance '" + params.get(1) + "' is not install ...");
-                    return;
+                    createApplianceNode(params);
                 }
-
-                if (params.size() == 2)
-                    new Node(m_base_url, (String) params.get(0), (String) params.get(1));
-                else
-                    new Node(m_base_url, (String) params.get(0), (String) params.get(1), (int) params.get(2), (int) params.get(3));
+                else {
+                    new Node(m_base_url,
+                            (String) params.get(0),
+                            (String) params.get(1),
+                            (params.size() == 2) ? 0 : (int) params.get(2),
+                            (params.size() == 2) ? 0 : (int) params.get(3));
+                }
                 break;
+
             case Link:
-                if (params.size() == 2)
-                    new Link(m_base_url, (Node) params.get(0), (Node) params.get(1));
-                else
-                    new Link(m_base_url, (Node) params.get(0), (Node) params.get(1), (int) params.get(2), (int) params.get(3));
+                new Link(m_base_url,
+                        (Node) params.get(0),
+                        (Node) params.get(1),
+                        (params.size() == 2) ? 0 : (int) params.get(2),
+                        (params.size() == 2) ? 0 : (int) params.get(3));
                 break;
         }
     }

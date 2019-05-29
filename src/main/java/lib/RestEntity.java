@@ -1,5 +1,7 @@
 package lib;
 
+import org.json.JSONObject;
+
 public abstract class RestEntity {
 
     String m_entity_id;
@@ -9,12 +11,14 @@ public abstract class RestEntity {
         m_base_url = base_url;
     }
 
-    public void update(){
-
+    public RestEntity update(JSONObject req){
+        RequestHelper.put(m_base_url + "/" + m_entity_id, req);
+        return this;
     }
 
-    public void delete(){
+    public RestEntity delete(){
         RequestHelper.delete(m_base_url + "/" + m_entity_id);
+        return this;
     }
 
     public String getId() {

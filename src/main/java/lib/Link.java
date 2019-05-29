@@ -13,24 +13,6 @@ public class Link extends RestEntity{
         m_entity_id = entity_id;
     }
 
-    Link(String base_url, Node n1, Node n2){
-        super(base_url);
-        m_n1 = n1;
-        m_n2 = n2;
-        JSONObject req = new JSONObject()
-                .put("nodes", new JSONArray()
-                        .put(new JSONObject()
-                                .put("adapter_number", 0)
-                                .put("node_id", m_n1.getTrueId())
-                                .put("port_number", 0))
-                        .put(new JSONObject()
-                                .put("adapter_number", 0)
-                                .put("node_id", m_n2.getTrueId())
-                                .put("port_number", 0)));
-        JSONObject res = RequestHelper.post(base_url, req);
-        m_entity_id = res.getString("link_id");
-    }
-
     Link(String base_url, Node n1, Node n2, int p1, int p2){
         super(base_url);
         m_n1 = n1;

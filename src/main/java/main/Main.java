@@ -1,9 +1,8 @@
 package main;
 
-import lib.CmdHelper;
 import lib.Controller;
-
-import java.io.IOException;
+import lib.Node;
+import org.json.JSONObject;
 
 public class Main {
 
@@ -11,21 +10,30 @@ public class Main {
 
         Controller controller = new Controller("192.168.56.103");
 
-        String project_name = "Demo_test";
+        String project_name = "Test_commandes";
 
-        System.out.println(
-                controller
-                .getProject(project_name)
-                .getNode("N4")
-                .sendCmd("!mkdir test")
-                .sendCmdAndWaitResp("!ls"));
+//        System.out.println(
+//                controller
+//                        .getProject(project_name)
+//                        .addNode("V2", "vpcs")
+//                        .getNode("V2")
+//                        .startNode()
+//                        .sendCmdAndWaitResp("!ls"));
 
-        System.out.println(
-                controller
-                        .getProject(project_name)
-                        .getNode("N4")
-                        .sendCmd("!rmdir test")
-                        .sendCmdAndWaitResp("!ls"));
+
+
+
+//        controller
+//                .getProject(project_name)
+//                .getNode("V1")
+//                .sendCmd("!ls");
+
+//        System.out.println(
+//                controller
+//                        .getProject(project_name)
+//                        .getNode("N")
+//                        .sendCmd("rmdir test")
+//                        .sendCmdAndWaitResp("ls"));
 
 
 /*        Node S = controller

@@ -10,32 +10,23 @@ import java.nio.charset.StandardCharsets;
 
 public class CmdHelper {
 
-    private static int deleteLastLines = 2;
+    private static int deleteLastLines = 0;
     private static int timeToSleep = 500;
-    private static TelnetClient telnet = new TelnetClient();
 
-
-    public static void write(String ip, int port, String cmd) throws IOException, InterruptedException {
-
-        telnet.connect(ip, port);
-        OutputStream outputStream = telnet.getOutputStream();
-
-        Thread.sleep(timeToSleep);
-        outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
-        outputStream.flush();
-    }
-
-    public static String read(String ip, int port, boolean wait) throws IOException, InterruptedException {
-
-        telnet.connect(ip, port);
-        InputStream inputStream = telnet.getInputStream();
-
-        Thread.sleep(timeToSleep);
+    private static String read(InputStream inputStream, boolean wait) throws IOException, InterruptedException {
         byte[] buffer = new byte[4096];
         int i = 0;
 
+        int stop = 5_000;
+        int total = 0;
+        int step = 100;
         while (inputStream.available() == 0 && wait){
-            Thread.sleep(100);
+            total += step;
+            Thread.sleep(step);
+            if (total > stop){
+                System.err.println("Nothing to read on that node ...");
+                break;
+            }
         }
 
         while (inputStream.available() > 0){
@@ -54,6 +45,75 @@ public class CmdHelper {
         }
 
         return result;
+    }
+
+
+    public static String read(String ip, int port, boolean wait) throws IOException, InterruptedException {
+        TelnetClient telnet = new TelnetClient();
+
+        telnet.connect(ip, port);
+        InputStream inputStream = telnet.getInputStream();
+
+        Thread.sleep(timeToSleep);
+        telnet.disconnect();
+        return read(inputStream, wait);
+    }
+
+    public static void write(String ip, int port, String cmd) throws IOException, InterruptedException {
+
+        TelnetClient telnet = new TelnetClient();
+
+        telnet.connect(ip, port);
+        InputStream inputStream = telnet.getInputStream();
+        OutputStream outputStream = telnet.getOutputStream();
+
+        Thread.sleep(timeToSleep);
+
+        outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
+        outputStream.flush();
+
+        inputStream.read();
+        telnet.disconnect();
+    }
+
+    public static String writeAndRead(String ip, int port, String cmd) throws IOException, InterruptedException {
+
+        TelnetClient telnet = new TelnetClient();
+
+        telnet.connect(ip, port);
+        InputStream inputStream = telnet.getInputStream();
+        OutputStream outputStream = telnet.getOutputStream();
+
+        Thread.sleep(timeToSleep);
+
+//        outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
+//        outputStream.flush();
+//
+//        String result = read(inputStream, true);
+
+        System.out.println(read(inputStream));
+
+        write(outputStream, "?");
+        System.out.println(read(inputStream));
+
+        return "";
+    }
+
+    private static void write(OutputStream outputStream, String s) throws IOException, InterruptedException {
+        Thread.sleep(timeToSleep);
+        outputStream.write((s + "\n").getBytes(StandardCharsets.UTF_8));
+        outputStream.flush();
+    }
+
+    private static String read(InputStream inputStream) throws IOException, InterruptedException {
+        Thread.sleep(timeToSleep);
+        byte[] buffer = new byte[4096];
+        int i = 0;
+        while (inputStream.available() > 0){
+            buffer[i] = (byte) inputStream.read();
+            i++;
+        }
+        return new String(buffer, StandardCharsets.UTF_8);
     }
 
 }
