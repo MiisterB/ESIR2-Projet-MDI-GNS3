@@ -81,7 +81,7 @@ public class Node extends RestEntity{
         return this;
     }
 
-    public String sendCmdAndWaitResp(String cmd){
+    public String sendCmdAndGetResp(String cmd){
         String ip = m_base_url.split(":3080")[0].split("//")[1];
         int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
 
@@ -97,14 +97,5 @@ public class Node extends RestEntity{
         CmdHelper.write(ip, port, cmd);
 
         return this;
-    }
-
-    public String waitConsoleOutput(){
-        String ip = m_base_url.split(":3080")[0].split("//")[1];
-        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
-
-        String result = CmdHelper.writeAndRead(ip, port, "");
-
-        return result;
     }
 }

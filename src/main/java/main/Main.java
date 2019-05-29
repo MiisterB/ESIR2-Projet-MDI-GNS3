@@ -13,10 +13,12 @@ public class Main {
 
         Node n = controller
                 .getProject(project_name)
-                .getNode("N");
+                .openProject()
+                .getNode("N")
+                .startNode();
 
         System.out.println(n
                 .sendCmd("mkdir besma")
-                .sendCmdAndWaitResp("ls"));
+                .sendCmdAndGetResp("ls"));
     }
 }
