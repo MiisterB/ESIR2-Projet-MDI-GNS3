@@ -55,4 +55,37 @@ public class Node extends RestEntity{
     public String getTrueId() {
         return m_entity_id;
     }
+
+    //Fonction qui duplique l'instance d'un noeud à l'emplacement (x,y)
+    public Node duplicateNode(int x, int y)
+    {
+        JSONObject req = new JSONObject()
+                .put("x", x)
+                .put("y", y)
+                .put("z",0);
+
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/duplicate", req);
+        return this;
+    }
+
+    //Fonction qui recharge l'instance d'un noeud
+    public Node reloadNode()
+    {
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/reload");
+        return this;
+    }
+
+    //Fonction qui lance le noeud
+    public Node startNode()
+    {
+        RequestHelper.post(m_base_url + "/" + getTrueId() + "/start");
+        return this;
+    }
+
+    //Fonction qui arrête le noeud
+    public Node stopNode()
+    {
+       RequestHelper.post(m_base_url + "/" + getTrueId() + "/stop");
+        return this;
+    }
 }
