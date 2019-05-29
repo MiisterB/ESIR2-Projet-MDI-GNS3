@@ -28,6 +28,10 @@ public class Controller {
         return projects.getEntity(name);
     }
 
+    public Project getProjectById(String id){
+        return projects.getEntityById(id);
+    }
+
     public Controller deleteProject(String name){
         projects.deleteEntity(name);
         return this;

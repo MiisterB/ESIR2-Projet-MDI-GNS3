@@ -11,6 +11,10 @@ public abstract class RestEntity {
         m_base_url = base_url;
     }
 
+    public JSONObject get(){
+        return RequestHelper.get(m_base_url + "/" + m_entity_id);
+    }
+
     public RestEntity update(JSONObject req){
         RequestHelper.put(m_base_url + "/" + m_entity_id, req);
         return this;
@@ -22,6 +26,10 @@ public abstract class RestEntity {
     }
 
     public String getId() {
+        return m_entity_id;
+    }
+
+    public String getTrueId() {
         return m_entity_id;
     }
 }

@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 public class CmdHelper {
 
-    private static int deleteLastLines = 2;
-    private static int timeToSleep = 1000;
+    private static int deleteLastLines = 0;
+    private static int timeToSleep = 500;
 
 
     private static String read(InputStream inputStream) throws IOException, InterruptedException {

@@ -1,7 +1,6 @@
 package main;
 
 import lib.Controller;
-import lib.Node;
 
 public class Main {
 
@@ -11,14 +10,12 @@ public class Main {
 
         String project_name = "Test_commandes";
 
-        Node n = controller
+        controller
                 .getProject(project_name)
                 .openProject()
-                .getNode("N")
-                .startNode();
-
-        System.out.println(n
-                .sendCmd("mkdir besma")
-                .sendCmdAndGetResp("ls"));
+                .getLinks()
+                .forEach(link -> {
+                    System.out.println(link.getId());
+                });
     }
 }
