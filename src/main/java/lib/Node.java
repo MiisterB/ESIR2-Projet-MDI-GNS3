@@ -35,6 +35,10 @@ public class Node extends RestEntity{
         return m_name;
     }
 
+    public String getNodeType() {
+        return m_node_type;
+    }
+
     public String getId() {
         return m_name;
     }
@@ -106,5 +110,26 @@ public class Node extends RestEntity{
         int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
 
         return CmdHelper.readUntil(ip, port, text, timeOut);
+    }
+
+    public String getNetworkConfig(){
+        String result = "";
+        if (getNodeType().equals("vpcs")){
+            result = sendCmdAndReadUntil("!cat startup.vpc", "VPCS>", 2000);
+        }
+        else {
+            result = sendCmdAndReadUntil("cat /gns3volumes/etc/network/interfaces", "root@N:~#", 2000);
+        }
+        return result;
+    }
+
+    public Node setNetworkConfig(String conf){
+        if (getNodeType().equals("vpcs")){
+            sendCmd("!echo \"" + conf + "\" >  startup.vpc");
+        }
+        else {
+            sendCmd("echo \"" + conf + "\" > /gns3volumes/etc/network/interfaces");
+        }
+        return this;
     }
 }
