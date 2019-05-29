@@ -59,14 +59,14 @@ public class Docker extends RestEntity{
     }
 
     //Fonction qui permet de mettre un docker en pause
-    public Docker pauseDocker(String destination_node_id) {
+    public Docker pauseDocker() {
 
         RequestHelper.post(m_base_url + "/" + getTrueId() + "/pause");
         return this;
     }
 
     //Fonction qui permet de redemarrer un conteneur docker
-    public Docker reloadDocker(String destination_node_id) {
+    public Docker reloadDocker() {
 
         RequestHelper.post(m_base_url + "/" + getTrueId() + "/reload");
         return this;
