@@ -57,5 +57,6 @@ public class TestProjetManagement {
         assertEquals(nodes, project.getNodes());
         assertEquals(links, project.getLinks());
 
+        project.delete();
     }
 }

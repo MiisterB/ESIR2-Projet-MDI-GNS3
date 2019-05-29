@@ -95,6 +95,10 @@ git pull origin develop
   * Des tutos de prise en main de REST template
   * La façon dont on manipule le JSON depuis JAVA 
 
+### 4.3 Créationde structure avec l'API Fluent
+
+Il est possible de créer des structures rapidement grâce à l'API Fluent et la class Structure du projet. Cette dernière permet de créer un noeud central de type "ethernet_switch" autour duquel se trouve d'autre noeuds dont on peut choisir le type.
+
 ## 5. Contributeurs
 
 ### 5.1 Compositions de l'équipe
