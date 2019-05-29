@@ -66,26 +66,18 @@ public class Structure
             default : //Star
             {
                 System.out.println("Default orientation is Star (you can change it by choosing Left, Right, Up or Down)");
-                if(nbrNode<=5)
-                {
-                    m_xPosNodes = new int[]{100,200,100,-200,-100,-200,200,-100};
-                    m_yPosNodes = new int[]{200,-100,-200,-100,200,100,100,-200};
-                }
-                else
-                {
-                    m_xPosNodes = new int[]{100,200,200,100,-100,-200,-200,-100};
-                    m_yPosNodes = new int[]{200,100,-100,-200,-200,-100,100,200};
-                }
+                generateStarOrientation();
                 generateStructure();
             }
         }
     }
 
     //Constructor with default orientation of nodes (Left)
-    public Structure(String name,Controller controller, String projectName, int nbrNode, int xPos, int yPos)
+    public Structure(String name,Controller controller, String projectName, int nbrNode, String nodeType, int xPos, int yPos)
     {
         m_controller = controller;
         m_projectName = projectName;
+        m_nodeType = nodeType;
         m_nbrNode = nbrNode;
         m_name = name;
         m_nodeTab = new Node[m_nbrNode];
@@ -93,17 +85,17 @@ public class Structure
         m_xPosCenter = xPos;
         m_yPosCenter = yPos;
 
-        m_xPosNodes = new int[]{0,+100,+100,+100,0,-100,-100,-100};
-        m_yPosNodes = new int[]{0,+100,-100,+200,-200,+300,-300,+400};
+        generateStarOrientation();
 
         generateStructure();
     }
 
-    //Constructor with default position of the center of the structure and default orientation of nodes (Left)
+    //Constructor with default position of the center of the structure and default orientation of nodes (Left) and default type of node (vpcs)
     public Structure(String name,Controller controller, String projectName, int nbrNode)
     {
         m_controller = controller;
         m_projectName = projectName;
+        m_nodeType = "vpcs";
         m_nbrNode = nbrNode;
         m_name = name;
         m_nodeTab = new Node[m_nbrNode];
@@ -111,8 +103,7 @@ public class Structure
         m_xPosCenter = 0;
         m_yPosCenter = 0;
 
-        m_xPosNodes = new int[]{0,+100,+100,+100,0,-100,-100,-100};
-        m_yPosNodes = new int[]{0,+100,-100,+200,-200,+300,-300,+400};
+        generateStarOrientation();
 
         generateStructure();
     }
@@ -153,6 +144,7 @@ public class Structure
             i++;
         }
 
+        //If we have a nodeType which can handle more than one port, we create additionnal links between each nodes (except the first one and the last one)
         if(m_nbrNode > 1 && m_nodeType != "vpcs")
         {
             int j;
@@ -162,10 +154,25 @@ public class Structure
             }
             j = m_nodeTab.length-1;
 
+            //If we have an orientation like a star, we create a link between the first and the last node
             if(m_orientation != "Right" && m_orientation != "Left" & m_orientation != "Up" && m_orientation != "Down")
             {
                 m_controller.getProject(m_projectName).addLink(m_nodeTab[j],m_nodeTab[0],1,2);
             }
+        }
+    }
+
+    protected void generateStarOrientation()
+    {
+        if(m_nbrNode<=5)
+        {
+            m_xPosNodes = new int[]{100,200,100,-200,-100,-200,200,-100};
+            m_yPosNodes = new int[]{200,-100,-200,-100,200,100,100,-200};
+        }
+        else
+        {
+            m_xPosNodes = new int[]{100,200,200,100,-100,-200,-200,-100};
+            m_yPosNodes = new int[]{200,100,-100,-200,-200,-100,100,200};
         }
     }
 
@@ -182,8 +189,29 @@ public class Structure
         }
     }
 
-    public Node getJunctionNode()
+
+    public int getTotalNumberOfNode()
     {
-        return m_controller.getProject(m_projectName).getNode(m_name);
+        return m_nbrNode+1;
+    }
+
+    public int[] getxPosNodes()
+    {
+        return m_xPosNodes;
+    }
+
+    public int[] getyPosNodes()
+    {
+        return m_yPosNodes;
+    }
+
+    public String getNodeType()
+    {
+        return m_nodeType;
+    }
+
+    public String getOrientation()
+    {
+        return m_orientation;
     }
 }

@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Controller controller = new Controller("148.60.11.161");
 
-        String project_name = "testStructure";
+        String project_name = "Structure";
         controller.deleteProject(project_name);
 
         controller.addProject(project_name);
