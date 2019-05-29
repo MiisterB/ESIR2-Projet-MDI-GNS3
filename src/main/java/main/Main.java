@@ -1,8 +1,12 @@
 package main;
 
 import lib.Controller;
-import lib.Node;
-import org.json.JSONObject;
+import org.apache.commons.net.telnet.TelnetClient;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Main {
 
@@ -12,60 +16,33 @@ public class Main {
 
         String project_name = "Test_commandes";
 
-//        System.out.println(
-//                controller
-//                        .getProject(project_name)
-//                        .addNode("V2", "vpcs")
-//                        .getNode("V2")
-//                        .startNode()
-//                        .sendCmdAndWaitResp("!ls"));
-
-
-
-
 //        controller
 //                .getProject(project_name)
-//                .getNode("V1")
-//                .sendCmd("!ls");
+//                .openProject()
+//                .getNode("V")
+//                .startNode()
+//                .sendCmdAndWaitResp("?");
 
-//        System.out.println(
-//                controller
-//                        .getProject(project_name)
-//                        .getNode("N")
-//                        .sendCmd("rmdir test")
-//                        .sendCmdAndWaitResp("ls"));
+        TelnetClient telnet = new TelnetClient();
+        try {
+            telnet.connect("192.168.56.103", 5004);
+
+            InputStream inputStream = telnet.getInputStream();
+            OutputStream outputStream = telnet.getOutputStream();
+
+            System.out.println(read(inputStream));
+
+            write(outputStream, "?");
+            System.out.println(read(inputStream));
+
+            telnet.disconnect();
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
 
-/*        Node S = controller
-                .deleteProject(project_name)
-                .addProject(project_name)
-                .getProject(project_name)
-                .addNode("N1", "vpcs", 200, 200)
-                .addNode("N2", "vpcs", -200, 200)
-                .addNode("N3", "docker_appliance", 200, 200)
-                .addNode("N4", "vpcs", -200, -200)
-                .addNode("N5", "vpcs", 200, -200)
-                .addNode("S", BuiltInNodes.ethernet_switch.toString(), 0, 0)
-                .getNode("S");
 
-        int i = 0;
-        for (Node n : controller.getProject(project_name).getNodes()){
-            if (!n.getName().equals("S")){
-                controller.getProject(project_name).addLink(n, S, 0, i);
-                i++;
-            }
-        }*/
-
-/*        String project_name = "testStructure";
-        controller.deleteProject(project_name);
-
-        controller.addProject(project_name);
-
-        Node n1 = controller.getProject(project_name).addNode("N1","vpcs",-500,0).getNode("N1");
-
-        Structure structure1 = new Structure("A",controller, project_name, 5, 200,200, n1);
-        Node n2 = structure1.generateStructure();
-        Structure structure2 = new Structure("B",controller, project_name, 5, 400,200);
-        structure2.generateStructure();*/
     }
 }

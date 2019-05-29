@@ -11,9 +11,10 @@ import java.nio.charset.StandardCharsets;
 public class CmdHelper {
 
     private static int deleteLastLines = 0;
-    private static int timeToSleep = 500;
 
-    private static String read(InputStream inputStream, boolean wait) throws IOException, InterruptedException {
+    private static int timeToSleep = 1000;
+
+/*    private static String read(InputStream inputStream, boolean wait) throws IOException, InterruptedException {
         byte[] buffer = new byte[4096];
         int i = 0;
 
@@ -86,24 +87,15 @@ public class CmdHelper {
 
         Thread.sleep(timeToSleep);
 
-//        outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
-//        outputStream.flush();
-//
-//        String result = read(inputStream, true);
-
-        System.out.println(read(inputStream));
-
-        write(outputStream, "?");
-        System.out.println(read(inputStream));
-
-        return "";
-    }
-
-    private static void write(OutputStream outputStream, String s) throws IOException, InterruptedException {
-        Thread.sleep(timeToSleep);
-        outputStream.write((s + "\n").getBytes(StandardCharsets.UTF_8));
+        outputStream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
-    }
+
+        String result = read(inputStream, true);
+
+        return result;
+    }*/
+
+
 
     private static String read(InputStream inputStream) throws IOException, InterruptedException {
         Thread.sleep(timeToSleep);
@@ -116,4 +108,9 @@ public class CmdHelper {
         return new String(buffer, StandardCharsets.UTF_8);
     }
 
+    private static void write(OutputStream outputStream, String s) throws IOException, InterruptedException {
+        Thread.sleep(timeToSleep);
+        outputStream.write((s + "\n").getBytes(StandardCharsets.UTF_8));
+        outputStream.flush();
+    }
 }
