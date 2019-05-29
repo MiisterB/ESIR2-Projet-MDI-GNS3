@@ -103,9 +103,19 @@ class EntityManager<T extends RestEntity> {
         }
     }
 
-    T getEntity(String id) {
+    T getEntity(String name) {
         for (T e : getEntities()) {
-            if (e.getId().equals(id)) {
+            if (e.getId().equals(name)) {
+                return e;
+            }
+        }
+        System.err.println("L'entité " + name + " n'existe pas !");
+        return null;
+    }
+
+    public T getEntityById(String id) {
+        for (T e : getEntities()) {
+            if (e.getTrueId().equals(id)) {
                 return e;
             }
         }
@@ -122,4 +132,5 @@ class EntityManager<T extends RestEntity> {
         }
         System.err.println("L'entité " + id + " n'existe pas !");
     }
+
 }

@@ -17,7 +17,7 @@ public class TestCmd {
                 .addNode("N", "vpcs")
                 .getNode("N")
                 .sendCmd("!mkdir test")
-                .sendCmdAndWaitResp("!ls");
+                .sendCmdAndGetResp("!ls");
 
         assertTrue(result.contains("test"));
     }
