@@ -1,7 +1,10 @@
 package lib;
+import org.apache.commons.net.telnet.TelnetClient;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Node extends RestEntity{
 
@@ -78,52 +81,30 @@ public class Node extends RestEntity{
         return this;
     }
 
-    public Node sendCmd(String  cmd){
-        String ip = m_base_url
-                .split(":3080")[0]
-                .split("//")[1];
-        JSONObject n = RequestHelper.get(m_base_url + "/" + getTrueId());
-        int port = n.getInt("console");
+    public String sendCmdAndWaitResp(String cmd){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
 
-        try {
-            CmdHelper.write(ip, port, cmd);
-        } catch (IOException | InterruptedException e ) {
-            e.printStackTrace();
-        }
+        String result = CmdHelper.writeAndRead(ip, port, cmd);
+
+        return result;
+    }
+
+    public Node sendCmd(String cmd){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
+
+        CmdHelper.write(ip, port, cmd);
+
         return this;
     }
 
-    public String sendCmdAndWaitResp(String cmd){
-        String ip = m_base_url
-                .split(":3080")[0]
-                .split("//")[1];
-        JSONObject n = RequestHelper.get(m_base_url + "/" + getTrueId());
-        int port = n.getInt("console");
+    public String waitConsoleOutput(){
+        String ip = m_base_url.split(":3080")[0].split("//")[1];
+        int port = RequestHelper.get(m_base_url + "/" + getTrueId()).getInt("console");
 
-        String result = "";
+        String result = CmdHelper.writeAndRead(ip, port, "");
 
-        try {
-            CmdHelper.writeAndRead(ip, port, cmd);
-        } catch (IOException | InterruptedException e ) {
-            e.printStackTrace();
-        }
         return result;
-    }
-
-    public String readConsole (){
-        String ip = m_base_url
-                .split(":3080")[0]
-                .split("//")[1];
-        JSONObject n = RequestHelper.get(m_base_url + "/" + getTrueId());
-        int port = n.getInt("console");
-        String result = "";
-
-        try {
-            result = CmdHelper.read(ip, port, false);
-        } catch (IOException | InterruptedException e ) {
-            e.printStackTrace();
-        }
-        return result;
-
     }
 }
