@@ -40,7 +40,15 @@ public class Link extends RestEntity{
     }
 
     public Node getSecondNode() {
-        return null;
+        String secondNodeId = this.get()
+                .getJSONArray("nodes")
+                .getJSONObject(1)
+                .getString("node_id");
+        String projectId = this.get()
+                .getString("project_id");
+        return new Controller(m_base_url.split(":3080")[0].split("//")[1])
+                .getProjectById(projectId)
+                .getNodeByID(secondNodeId);
     }
 
     public int getFirstNodePort() {
