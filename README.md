@@ -97,7 +97,21 @@ git pull origin develop
 
 ### 4.3 Créationde structure avec l'API Fluent
 
-Il est possible de créer des structures rapidement grâce à l'API Fluent et la class Structure du projet. Cette dernière permet de créer un noeud central de type "ethernet_switch" autour duquel se trouve d'autre noeuds dont on peut choisir le type.
+Il est possible de créer des structures rapidement grâce à l'API Fluent et la class Structure du projet. Cette dernière permet de créer un noeud central de type "ethernet_switch" autour duquel se trouve d'autre noeuds dont on peut choisir le type. Il existe plusieurs constructeurs pour créer une strcuture :
+
+* public Structure(String name, Controller controller, String projectName, int nbrNode, String nodeType, int xPos, int yPos, String orientation) : constructeur complet, où on peut choisir la position, l'orientation et le type du noeud.
+* public Structure(String name, Controller controller, String projectName, int nbrNode, String nodeType, int xPos, int yPos) : constrcuteur basique, où peut on peut choisir la position et le type de noeud mais pas l'orientation (on a donc l'orientation de base qui est celle en étoile).
+* public Structure(String name, Controller controller, String projectName, int nbrNode) : constructeur par défaut, où on a le type de noeud par défaut (vpcs), l'orientation par défaut (en étoile) et la position par défaut (0,0).
+
+En ce qui concerne les paramêtres d'une strcture, voici quelques détails :
+
+* Le type de noeud : correspond au type de noeud qui sera généré autour du noeud central (ou noeud de jonction), le noeud de base est le noeud vpcs qui comporte un seul port. Dans le cas où on choisit un type de noeud qui possède plus d'un port (autre qu'un noeud vpcs), les noeuds seront reliés les uns aux autres de la manière suivante : le 1er noeud lié au 2ème, le 2ème lié au 3ème, etc...  Cependant, pour que le premier et le dernier noeud soient liés entre eux il faut que l'orientation de la structure soit en étoile.
+* La position (xPos et yPos) : correspond aux coordonnées du noeud central de la structure, la position des autres noeuds sera généré à partir de ces coordonnées.
+* L'orientation : correspond à la manière dont la structure va être orienté, elle peut être orienté de 2 manières différentes :
+  * Orientation linéaire : dans le cas où l'orientation est égal à : Right, Left, Up et Down. L'orientation sera linéaire et elle sera placé en fonction de la direction donnée (vers la droite pour Right par exemple).
+  * Orientation en étoile (défaut) : c'est l'orientation par défaut, si on écrit autre chose que Right, Left, Up ou Down. Les noeuds seront positionnés tout autour du noeud central. Ils seront reliés entre eux si le type de noeud contiens un nombre de port supérieur à 1.
+  
+Il est possible de relier des noeuds à une structure dans le cas où elle possède encore des ports de libres grâce à la méthode connectNode(Node node, int intPort). Avec cette méhtode, on choisit quelle noeud on veut relier au noeud (node) de jonction de la structure et quel port du noeud à ajouter on veut utiliser (intPort). Si jamais le noeud de jonction de la structure ou le noeud externe ne possède pas de port libre, il n'y aura pas de lien de créé entre les deux et on aura un message d'information pour l'indiquer.
 
 ## 5. Contributeurs
 
