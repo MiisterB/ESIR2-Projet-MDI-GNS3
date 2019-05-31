@@ -38,7 +38,7 @@ git pull origin develop
 ```
 ...
 
-  Pour avoir plus détail sur la façon de développer de nouvelles fonctionnalités : voir 
+  Pour avoir plus détail sur notre gestion des branches git : voir 
   [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Détail-du-GitFlow)
   .
 
@@ -46,13 +46,13 @@ git pull origin develop
 
    #### 2.2.1 Création de structure depuis l'API
 
-  Il est possiblle dans la nouvelle API fluent de crée des structures complexes (comme des réseaux en étoile, ...). Pour plaus de détail voir le [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Librairie-Structure-de-l'API-STOB-GNS3) suivant.
+  Il est possiblle dans la nouvelle API fluent de crée des structures complexes (comme des réseaux en étoile, ...). Pour plus de détails voir le [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Librairie-Structure-de-l'API-STOB-GNS3) suivant.
 
    #### 2.2.2 Ecriture dans la console des noeuds depuis l'API
-///TODO
+  La plupart des noeuds instanciés dans les projets GNS3 (routeurs, vpcs, containers docker, machines virtuelles linux, ...) sont accessibles depuis le réseaux. Nous avons donc implémenté des méthodes permettant d'envoyer directement une commande à exécuter sur un noeud, avec un simple `node.sendCmd("$commande")`. Ces méthodes ouvrent un connexion telnet sur le noeud en précisant le port qui lui correspond, et peuvent aussi lire les résultats de ces exécutions.
   
    #### 2.2.3 Edition de la configuration des noeuds depuis l'API
-/// TODO
+   Souvent quand on crée une topologie avec GNS3, il est necessaire de modifier la configuration réseau de plusieurs noeuds (DHCP, ip statique, ...). Notre API offre un moyen rapide de récupérer et/ou modifier cette configuration avec juste un appel de méthode sur le noeud concerné.
 
   ### 2.3 Liens pratiques JAVA
 
@@ -62,7 +62,7 @@ git pull origin develop
   * Des tutos de prise en main de REST template
   * La façon dont on manipule le JSON depuis JAVA 
 
-## 3. Contributeurs
+## 3. Gestion de projet
 
   ### 3.1 Compositions de l'équipe
 
