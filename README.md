@@ -62,9 +62,9 @@ git pull origin develop
   * Des tutos de prise en main de REST template
   * La façon dont on manipule le JSON depuis JAVA 
 
-## 5. Contributeurs
+## 3. Contributeurs
 
-  ### 5.1 Compositions de l'équipe
+  ### 3.1 Compositions de l'équipe
 
 <p> L'équipe projet STOB-GNS3 est coposée de :</p>
 
@@ -75,10 +75,10 @@ git pull origin develop
 
 <p> L'origine du nom du groupe provient de nos initials..</p>
 
-  ### 5.2 Répartition des rôles
+  ### 3.2 Répartition des rôles
 
  Voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/R%C3%B4les)
 
-  ### 5.3 Pratiques Agiles
+  ### 3.3 Pratiques Agiles
 
   Pour la réalisation de ce projet, nous avons essayé au maximum d'appliquer les principes agiles qui nous ont été enseignés (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Pratiques-agiles) ).
