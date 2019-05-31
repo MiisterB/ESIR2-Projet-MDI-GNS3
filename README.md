@@ -8,15 +8,15 @@
 
   <p> GNS3 est un logiciel libre permettant l'émulation ou la simulation de réseaux informatiques. Il est beaucoup utilisé dans le domaine des réseaux et télecom.</p> 
 
-  <p> Une API REST GNS3 étant déjà existante, nous devons la prendre en main, la rendre fluent (c'est-à-dire qu'il deviendra possible d'avoir des compositions de méthodes), et y ajouter des méthodes de plus haut niveau pour faciliter l'expérience utilisateur.</p>
+  <p> Nous avons utilisé l'API REST GNS3 déjà existante permettant de communiquer avec un serveur GNS3 pour developper une API Java fluent (c'est-à-dire qu'il est facile de faire des compositions de méthodes car chaque méthode retourne l'objet sur lequel elle est appelé). Nous avons également imaginé des des méthodes de plus haut niveau pour faciliter l'expérience utilisateur et créer rapidement des topologies de réseaux complexes.</p>
 
   ### 1.2 Du cahier des charges aux specs
 
   Après avoir compris les enjeux du projet, nous les avons mis en pages dans un cahier des charges ( voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Cahier-des-charges)). 
   
-   Cela nous a permis de bien mettre à plat nos idées, ce qui nous a permis de concevoir la structure du projet, mais aussi les specs (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Specs)).
+   Cela nous a ammené à bien mettre à plat nos idées, ce qui nous a permis de concevoir la structure du projet, mais aussi les specs (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Specs)).
   
-   Le travail a été continue tout au long du projet. Pour surveiller notre évolution dans le temps nous avons, à chaque séance, réalisée un compte rendu de séance (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Compte-rendus-des-s%C3%A9ances) ). Cela nous a beaucoup aidé lors de la ré-orientation des tâches à accomplir.
+   Pour surveiller notre évolution dans le temps nous avons, à chaque séance, réalisé un compte rendu (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Compte-rendus-des-s%C3%A9ances)). Ces réunions régulières nous ont beaucoup aidé lors de la ré-orientation des tâches à accomplir.
 
   ### 1.3 Liens utiles à la compréhension du projet
 
