@@ -9,7 +9,7 @@ public class TestCmd {
     public void testLauchCmds(){
         String project_name = "test_cmd";
 
-        Controller controller = new Controller("http://148.60.11.161");
+        Controller controller = new Controller("148.60.11.161");
 
         String result = controller
                 .addProject(project_name)
