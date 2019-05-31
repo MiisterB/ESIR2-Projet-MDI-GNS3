@@ -32,4 +32,4 @@ Si vous voulez utiliser l'API depuis les sources ou modifier les sources :
 
 #### 2.2 Utiliser le JAR
 
-  <p> Si vous voulez juste utiliser les méthodes de l'API , il faut seulement ajouter la jar à votre projet. Pour celà il suffit de le télécharger puis de l'ajouter comme librairie extérieur avec votre IDE, ou bien de l'ajouter comme librairie au moment de compiler votre projet java. Vous avez maintenant accès à l'API GNS3 de l'équipe projet *stob-gns*.</p>
+  <p> Si vous voulez juste utiliser les méthodes de l'API , il faut ajouter le jar à votre projet. Pour celà il suffit de le télécharger puis de l'ajouter comme librairie extérieur avec votre IDE, ou bien de l'ajouter au moment de compiler votre projet java. Vous avez maintenant accès à l'API GNS3 de l'équipe projet *stob-gns*.</p>
