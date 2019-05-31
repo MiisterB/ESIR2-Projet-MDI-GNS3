@@ -6,7 +6,7 @@
 
     <groupId>esir.mdi.project</groupId>
     <artifactId>stob-gns</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <build>
         <plugins>
             <plugin>
@@ -43,6 +43,16 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>[4.3.18,)</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+            <scope>system</scope>
+            <systemPath>
+                C:\Users\timsc\Documents\ESIR\Projet_MDI\codebase\lib\commons-net-3.6.jar
+            </systemPath>
         </dependency>
 
     </dependencies>
