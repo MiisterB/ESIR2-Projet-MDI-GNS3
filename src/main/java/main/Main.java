@@ -8,36 +8,55 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Controller controller = new Controller("148.60.11.161");
+        Controller controller = new Controller("192.168.56.103");
 
-        String project_name = "Test_commandes";
+        String project_name = "Test_cmds";
 
-
-        System.out.println(controller
+        Node n = controller
+                .addProject(project_name)
                 .getProject(project_name)
                 .openProject()
-                .getNode("V2")
+                .addNode("N", "vpcs")
+                .getNode("N")
+                .startNode();
+
+        String result = n
+                .sendCmd("!mkdir test")
+                .sendCmdAndReadUntil("!ls", "root@N:~#", 2000);
+
+        System.out.println(result);
+
+
+   /*     String networkConfig = controller
+                .addProject(project_name)
+                .getProject(project_name)
+                .openProject()
+                .addNode("V", "vpcs")
+                .getNode("V")
                 .startNode()
                 .setNetworkConfig(
                         "# This is a custom network config set by GNS3 fluent API\\n" +
                                 "ip 192.168.1.1 255.0.0.0\\n" +
                                 "set pcname V2\\n")
-                .getNetworkConfig());
+                .getNetworkConfig();
+        System.out.println(networkConfig);
 
-                System.out.println(controller
+        networkConfig = controller
                 .getProject(project_name)
                 .openProject()
-                .getNode("N2")
+                .addNode("N", "Ubuntu Docker Guest")
+                .getNode("N")
                 .startNode()
                 .setNetworkConfig(
                         "# This is a custom network config set by GNS3 fluent API\n" +
-                        "auto eth0\n" +
-                        "iface eth0 inet static\n" +
-                        "\taddress 192.168.0.2\n" +
-                        "\tnetmask 255.255.255.0\n" +
-                        "\tgateway 192.168.0.1\n" +
-                        "\tup echo nameserver 192.168.0.1 > /etc/resolv.conf\n")
-                .getNetworkConfig());
+                                "auto eth0\n" +
+                                "iface eth0 inet static\n" +
+                                "\taddress 192.168.0.2\n" +
+                                "\tnetmask 255.255.255.0\n" +
+                                "\tgateway 192.168.0.1\n" +
+                                "\tup echo nameserver 192.168.0.1 > /etc/resolv.conf\n")
+                .getNetworkConfig();
+        System.out.println(networkConfig);*/
     }
 
     public static void demoStructure() {
