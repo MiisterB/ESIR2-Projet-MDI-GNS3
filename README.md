@@ -67,7 +67,7 @@ git pull origin develop
 
   ### 3.1 Compositions de l'équipe
 
-<p> L'équipe projet STOB-GNS3 est coposée de :</p>
+<p> L'équipe projet STOB-GNS3 est composée de :</p>
 
 * Simon Moisan
 * Timothée Schneider-Maunoury
@@ -83,4 +83,4 @@ git pull origin develop
   ### 3.3 Pratiques Agiles
 
   Pour la réalisation de ce projet, nous avons essayé au maximum d'appliquer les principes agiles qui nous ont été enseignés (voir [wiki](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/wiki/Pratiques-agiles) ).
-  Nous avons séparé chaque fonctionnalités à developer en users stries (issues Github) que nous avons rassemblé en trois sprints (milestones Github). Vous pouvez les retrouver [ici](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/milestones?state=closed). 
+  Nous avons séparé chaque fonctionnalités à developer en users stories (issues Github) que nous avons rassemblé en trois sprints (milestones Github). Vous pouvez les retrouver [ici](https://github.com/PapaTimot/ESIR2-Projet-MDI-GNS3/milestones?state=closed). 
